@@ -1,2 +1,22 @@
 {% extends 'vitrine/backoffice/base.html' %}
-{% block content %}<div class="content-head"><div><p class="eyebrow">Boîte de réception</p><h1>{{ title }}</h1><p class="muted">Accès réservé aux éditeurs de la vitrine.</p></div></div><div class="list">{% for item in items %}{% if kind == 'messages' %}<a class="list-row" href="{% url 'vitrine_admin:message_detail' item.pk %}"><div><strong>{{ item.sujet }}</strong><small>{{ item.nom }} · {{ item.created_at|date:'d/m/Y H:i' }}</small></div><span class="status {% if item.traite %}draft{% endif %}">{% if item.traite %}Traité{% else %}À traiter{% endif %}</span></a>{% else %}<a class="list-row" href="{% url 'vitrine_admin:application_detail' item.pk %}"><div><strong>{{ item.nom_complet }}</strong><small>{{ item.offre.titre|default:'Candidature spontanée' }} · {{ item.date_postulation|date:'d/m/Y H:i' }}</small></div><span>Voir ↗</span></a>{% endif %}{% empty %}<div class="empty">Aucun élément reçu pour le moment.</div>{% endfor %}</div>{% endblock %}
+{% block content %}
+<div class="content-head">
+  <div><p class="eyebrow">Boîte de réception</p><h1>{{ title }}</h1><p class="muted">Accès réservé aux éditeurs de la vitrine.</p></div>
+</div>
+<div class="list">
+  {% for item in items %}
+    {% if kind == 'messages' %}
+      <a class="list-row" href="{% url 'vitrine_admin:message_detail' item.pk %}">
+        <div><strong>{{ item.sujet }}</strong><small>{{ item.nom }} · {{ item.created_at|date:'d/m/Y H:i' }}</small>
+          <small>Notification e-mail : {{ item.get_notification_status_display }}</small></div>
+        <span class="status {% if item.traite %}draft{% endif %}">{% if item.traite %}Traité{% else %}À traiter{% endif %}</span>
+      </a>
+    {% else %}
+      <a class="list-row" href="{% url 'vitrine_admin:application_detail' item.pk %}">
+        <div><strong>{{ item.nom_complet }}</strong><small>{{ item.offre.titre|default:'Candidature spontanée' }} · {{ item.date_postulation|date:'d/m/Y H:i' }}</small></div>
+        <span>Voir ↗</span>
+      </a>
+    {% endif %}
+  {% empty %}<div class="empty">Aucun élément reçu pour le moment.</div>{% endfor %}
+</div>
+{% endblock %}

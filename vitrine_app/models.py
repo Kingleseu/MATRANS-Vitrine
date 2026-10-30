@@ -11,7 +11,7 @@ class SiteContent(models.Model):
     hero_kicker = models.CharField(max_length=100, default='MATRANS S.A.R.L. · République démocratique du Congo')
     hero_title = models.CharField(max_length=180, default='Vous gérez votre métier.')
     hero_title_accent = models.CharField('Suite du titre en orange', max_length=180, blank=True, default='')
-    hero_text = models.TextField(default='Chargement, déchargement et encadrement des caristes et manutentionnaires : des équipes supervisées pour faire avancer vos opérations.')
+    hero_text = models.TextField(default='Spécialiste de la manutention, MATRANS S.A.R.L. s’appuie sur des équipes expérimentées et un encadrement rigoureux pour accompagner vos opérations, avec une ouverture vers le transport de marchandises.')
     hero_image = models.ImageField("Image d'accueil", upload_to='vitrine/accueil/', blank=True, help_text="Remplace l'illustration provisoire de l'accueil.")
     about_title = models.CharField(max_length=160, default='Des équipes engagées au cœur de vos flux.')
     about_intro = models.TextField(default='MATRANS S.A.R.L. organise le chargement et le déchargement par chariots élévateurs, encadre les équipes sur site et accompagne les opérations de distribution en RDC.')
@@ -30,9 +30,9 @@ class SiteContent(models.Model):
     show_team = models.BooleanField(default=False, verbose_name="Afficher l'équipe")
     metric_caristes = models.CharField('Caristes formés · chiffre', max_length=30, default='200+')
     metric_manutentionnaires = models.CharField('Manutentionnaires gérés · chiffre', max_length=30, default='100+')
-    metric_casiers = models.CharField('Casiers traités par jour · chiffre', max_length=30, default='3 000 000')
+    metric_casiers = models.CharField('Manipulations par jour · chiffre', max_length=30, default='300 000')
     metric_incidents = models.CharField('Évolution des incidents chez BRACONGO · chiffre', max_length=30, default='-30 %')
-    metric_source = models.CharField('Source et période des chiffres', max_length=220, default='Présentation commerciale 2026 et correction communiquée par MATRANS en octobre 2026')
+    metric_source = models.CharField('Source et période des chiffres', max_length=220, default='Présentation commerciale MATRANS 2026 ; volume quotidien confirmé par MATRANS le 30 octobre 2026')
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -95,6 +95,25 @@ class CentreVitrine(models.Model):
 
     def __str__(self):
         return self.nom
+
+
+class PresenceVille(models.Model):
+    """City-level presence, distinct from confirmed distribution centres."""
+
+    ville = models.CharField('Ville', max_length=120, unique=True)
+    province = models.CharField('Province', max_length=120)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, validators=[MinValueValidator(-90), MaxValueValidator(90)])
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, validators=[MinValueValidator(-180), MaxValueValidator(180)])
+    publie = models.BooleanField('Visible sur le site', default=False)
+    ordre = models.PositiveIntegerField('Ordre d’affichage', default=0)
+
+    class Meta:
+        ordering = ['ordre', 'ville']
+        verbose_name = 'Ville d’intervention'
+        verbose_name_plural = 'Villes d’intervention'
+
+    def __str__(self):
+        return self.ville
 
 
 class Partenaire(models.Model):
@@ -227,6 +246,11 @@ class ContactMessage(models.Model):
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     traite = models.BooleanField(default=False)
+    notification_status = models.CharField(
+        'Notification e-mail', max_length=20,
+        choices=[('non_configure', 'Non configurée'), ('envoye', 'Envoyée'), ('erreur', 'Échec')],
+        default='non_configure',
+    )
 
     class Meta:
         ordering = ['-created_at']
@@ -235,3 +259,17 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f'{self.nom} — {self.sujet}'
+
+
+class ContactReply(models.Model):
+    contact = models.ForeignKey(ContactMessage, on_delete=models.CASCADE, related_name='reponses')
+    message = models.TextField('Réponse envoyée')
+    sent_at = models.DateTimeField('Envoyée le', auto_now_add=True)
+
+    class Meta:
+        ordering = ['sent_at']
+        verbose_name = 'Réponse à un contact'
+        verbose_name_plural = 'Réponses aux contacts'
+
+    def __str__(self):
+        return f'Réponse à {self.contact.nom}'

@@ -1,0 +1,8 @@
+.partner-logo{display:block;width:min(100%,145px);height:130px;object-fit:contain;margin:0 auto}
+.partner-card{min-height:230px;display:grid;place-items:center;text-align:center}
+.partner-card .partner-logo{margin-bottom:10px}
+.partner-card h2{font-size:22px;margin:0}
+.partner-card p.muted{font-size:13px;line-height:1.5;margin:12px 0 0}
+.partner-card .text-link{display:inline-block;font-size:12px;margin-top:13px}
+.partner-initial{display:grid;place-items:center;width:72px;height:72px;margin:0 auto 12px;border-radius:18px;background:#e4f2e7;color:#176346;font-size:34px;font-weight:900}
+.partner-cta-copy{color:#d8e9db;max-width:570px;margin:14px 0 0}

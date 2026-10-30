@@ -9,19 +9,21 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_POST
 
+from .email_delivery import MailDeliveryError, MailNotConfigured, mail_ready, send_contact_reply
 from .forms import (
     ActiviteForm, CentreVitrineForm, EvenementForm, MembreEquipeForm, OffreEmploiForm,
-    OffreQuestionForm, PartenaireForm, SiteContentForm,
+    OffreQuestionForm, PartenaireForm, PresenceVilleForm, SiteContentForm, ContactReplyForm,
 )
 from .models import (
-    Activite, Candidature, CentreVitrine, ContactMessage, Evenement, MembreEquipe,
-    OffreEmploi, OffreQuestion, Partenaire, SiteContent,
+    Activite, Candidature, CentreVitrine, ContactMessage, ContactReply, Evenement, MembreEquipe,
+    OffreEmploi, OffreQuestion, Partenaire, PresenceVille, SiteContent,
 )
 
 
 SECTIONS = {
     'activites': (Activite, ActiviteForm, 'Activités', 'Décrivez les services réellement proposés.'),
     'centres': (CentreVitrine, CentreVitrineForm, 'Centres sur la carte', 'Corrigez les positions indicatives et publiez les fiches visibles sur la carte de la RDC.'),
+    'villes': (PresenceVille, PresenceVilleForm, 'Villes d’intervention', 'Signalez une présence en ville sans la compter comme centre de distribution.'),
     'partenaires': (Partenaire, PartenaireForm, 'Partenaires', 'Publiez uniquement les collaborations autorisées.'),
     'offres': (OffreEmploi, OffreEmploiForm, "Offres d'emploi", 'Créez une offre, puis adaptez son formulaire.'),
     'evenements': (Evenement, EvenementForm, 'Événements', 'Préparez puis publiez vos actualités et événements.'),
@@ -146,12 +148,27 @@ def messages_list(request):
 @editor_required
 def message_detail(request, pk):
     item = get_object_or_404(ContactMessage, pk=pk)
-    if request.method == 'POST':
+    reply_form = ContactReplyForm(request.POST or None)
+    if request.method == 'POST' and request.POST.get('action') == 'toggle':
         item.traite = not item.traite
         item.save(update_fields=['traite'])
         return redirect('vitrine_admin:message_detail', pk=pk)
+    if request.method == 'POST' and request.POST.get('action') == 'reply' and reply_form.is_valid():
+        try:
+            send_contact_reply(item, reply_form.cleaned_data['message'])
+        except MailNotConfigured:
+            messages.error(request, 'L’envoi par e-mail n’est pas encore configuré. La réponse n’a pas été envoyée.')
+        except MailDeliveryError:
+            messages.error(request, 'L’envoi a échoué. Vérifiez la configuration et réessayez.')
+        else:
+            ContactReply.objects.create(contact=item, message=reply_form.cleaned_data['message'])
+            item.traite = True
+            item.save(update_fields=['traite'])
+            messages.success(request, 'La réponse a été envoyée par e-mail.')
+            return redirect('vitrine_admin:message_detail', pk=pk)
     return render(request, 'vitrine/backoffice/inbox_detail.html', _layout(
         title='Message de contact', kind='messages', item=item,
+        reply_form=reply_form, reply_enabled=mail_ready(), replies=item.reponses.all(),
     ))
 
 

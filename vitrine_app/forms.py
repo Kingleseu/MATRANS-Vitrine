@@ -4,7 +4,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from .models import (
-    Activite, Candidature, CentreVitrine, ContactMessage, Evenement, MembreEquipe,
+    Activite, Candidature, CentreVitrine, ContactMessage, ContactReply, Evenement, MembreEquipe, PresenceVille,
     OffreEmploi, OffreQuestion, Partenaire, SiteContent,
 )
 
@@ -72,6 +72,22 @@ class CentreVitrineForm(StyledModelForm):
         return data
 
 
+class PresenceVilleForm(StyledModelForm):
+    class Meta:
+        model = PresenceVille
+        fields = ['ville', 'province', 'latitude', 'longitude', 'publie', 'ordre']
+
+    def clean(self):
+        data = super().clean()
+        latitude, longitude = data.get('latitude'), data.get('longitude')
+        if latitude is not None and longitude is not None and not (
+            Decimal('-13.5') <= latitude <= Decimal('5.4')
+            and Decimal('12.2') <= longitude <= Decimal('31.3')
+        ):
+            raise ValidationError('Le point doit se trouver en République démocratique du Congo.')
+        return data
+
+
 class PartenaireForm(StyledModelForm):
     class Meta:
         model = Partenaire
@@ -124,6 +140,13 @@ class ContactForm(StyledModelForm):
         if self.cleaned_data.get('website'):
             raise ValidationError('Message non accepté.')
         return ''
+
+
+class ContactReplyForm(StyledModelForm):
+    class Meta:
+        model = ContactReply
+        fields = ['message']
+        widgets = {'message': forms.Textarea(attrs={'rows': 6, 'placeholder': 'Rédigez votre réponse…'})}
 
 
 class CandidatureForm(StyledModelForm):

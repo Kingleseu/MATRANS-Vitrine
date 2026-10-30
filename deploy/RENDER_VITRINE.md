@@ -35,6 +35,9 @@ Variables d'environnement :
 | `PRIVATE_MEDIA_ROOT` | `/var/data/private_media` |
 | `DJANGO_ALLOWED_HOSTS` | facultatif ; ajouter le domaine personnalisé une fois connu |
 | `DJANGO_CSRF_TRUSTED_ORIGINS` | facultatif ; origines HTTPS personnalisées supplémentaires |
+| `BREVO_API_KEY` | clé API Brevo, une fois le domaine expéditeur authentifié |
+| `CONTACT_FROM_EMAIL` | `contact@matrans-sarl.com` |
+| `CONTACT_INBOX_EMAIL` | `contact@matrans-sarl.com` |
 
 Render fournit automatiquement `RENDER_EXTERNAL_HOSTNAME` pour son sous-domaine. La configuration ajoute cet hôte à `ALLOWED_HOSTS` et à la liste CSRF. Avec Supabase, employer l'URL PostgreSQL du pooler **Session** et activer TLS dans l'URL (`sslmode=require`) si nécessaire.
 
@@ -55,7 +58,9 @@ Les migrations fournissent un contenu initial, mais elles ne transportent pas au
 
 - Cette préparation ne déploie rien automatiquement : elle ne fournit ni domaine MATRANS ni accès Render.
 - Le document contenant FTP et MySQL ne sert pas à cette option Render. Les mots de passe qu'il contient doivent être remplacés avant toute utilisation de cet autre hébergement.
-- Le formulaire de contact conserve les messages dans le studio, mais n'envoie pas encore d'e-mail.
+- Sur Render Free, les ports SMTP 25, 465 et 587 sont bloqués. Pour recevoir les notifications à `contact@matrans-sarl.com` et répondre depuis le studio, créer un compte Brevo, vérifier l'adresse expéditrice et authentifier `matrans-sarl.com`, puis enregistrer `BREVO_API_KEY` dans les variables Render. Ne jamais la placer dans GitHub ou dans une capture. L'application envoie les courriels par l'API HTTPS Brevo ; les messages restent en base même si l'envoi échoue. Le studio indique alors « Échec » et n'affiche une réponse comme envoyée qu'après confirmation de l'API.
+- Tant que `BREVO_API_KEY` n'est pas configurée, les messages sont enregistrés et lisibles dans le studio, mais aucune notification ni réponse par e-mail n'est envoyée. Tester l'envoi avec une adresse personnelle avant de communiquer le formulaire aux partenaires.
+- Logo BRACONGO : fichier statique provenant de la [page officielle BRACONGO](https://bracongo.cd/) ; remplacer dans le studio si une version officielle plus nette est fournie.
 - Le service de synchronisation Google Sheets de l'espace Rapports n'est pas inclus dans la vitrine.
 - Les avertissements `check --deploy` sur HSTS des sous-domaines et le préchargement restent volontaires pendant les essais ; ils seront réévalués seulement quand le domaine officiel et ses sous-domaines seront confirmés.
 

@@ -1,2 +1,48 @@
 {% extends 'vitrine/backoffice/base.html' %}
-{% block content %}<div class="content-head"><div><p class="eyebrow">Boîte de réception</p><h1>{{ title }}</h1></div><a class="button secondary" href="{% if kind == 'messages' %}{% url 'vitrine_admin:messages' %}{% else %}{% url 'vitrine_admin:applications' %}{% endif %}">← Retour</a></div><div class="panel"><dl class="detail">{% if kind == 'messages' %}<div><dt>Nom</dt><dd>{{ item.nom }}</dd></div><div><dt>Reçu le</dt><dd>{{ item.created_at|date:'d/m/Y H:i' }}</dd></div><div><dt>E-mail</dt><dd><a href="mailto:{{ item.email }}">{{ item.email }}</a></dd></div><div><dt>Téléphone</dt><dd>{{ item.telephone|default:'—' }}</dd></div><div><dt>Sujet</dt><dd>{{ item.sujet }}</dd></div><div><dt>Message</dt><dd>{{ item.message|linebreaksbr }}</dd></div>{% else %}<div><dt>Nom</dt><dd>{{ item.nom_complet }}</dd></div><div><dt>Offre</dt><dd>{{ item.offre.titre|default:'Candidature spontanée' }}</dd></div><div><dt>E-mail</dt><dd><a href="mailto:{{ item.email }}">{{ item.email }}</a></dd></div><div><dt>Téléphone</dt><dd>{{ item.telephone }}</dd></div><div><dt>Reçue le</dt><dd>{{ item.date_postulation|date:'d/m/Y H:i' }}</dd></div><div><dt>CV</dt><dd><a href="{% url 'vitrine_admin:application_cv' item.pk %}">Télécharger le PDF ↗</a></dd></div><div><dt>Message</dt><dd>{{ item.lettre_motivation|default:'—'|linebreaksbr }}</dd></div>{% for key,answer in item.reponses.items %}<div><dt>{{ answer.question }}</dt><dd>{{ answer.reponse|default:'—' }}</dd></div>{% endfor %}{% endif %}</dl>{% if kind == 'messages' %}<form method="post">{% csrf_token %}<button class="button" type="submit">{% if item.traite %}Marquer à traiter{% else %}Marquer comme traité{% endif %}</button></form>{% endif %}</div>{% endblock %}
+{% block content %}
+<div class="content-head">
+  <div><p class="eyebrow">Boîte de réception</p><h1>{{ title }}</h1></div>
+  <a class="button secondary" href="{% if kind == 'messages' %}{% url 'vitrine_admin:messages' %}{% else %}{% url 'vitrine_admin:applications' %}{% endif %}">← Retour</a>
+</div>
+<div class="panel">
+  <dl class="detail">
+    {% if kind == 'messages' %}
+      <div><dt>Nom</dt><dd>{{ item.nom }}</dd></div>
+      <div><dt>Reçu le</dt><dd>{{ item.created_at|date:'d/m/Y H:i' }}</dd></div>
+      <div><dt>E-mail</dt><dd><a href="mailto:{{ item.email }}">{{ item.email }}</a></dd></div>
+      <div><dt>Téléphone</dt><dd>{{ item.telephone|default:'—' }}</dd></div>
+      <div><dt>Sujet</dt><dd>{{ item.sujet }}</dd></div>
+      <div><dt>Message</dt><dd>{{ item.message|linebreaksbr }}</dd></div>
+      <div><dt>Notification à MATRANS</dt><dd>{{ item.get_notification_status_display }}</dd></div>
+    {% else %}
+      <div><dt>Nom</dt><dd>{{ item.nom_complet }}</dd></div>
+      <div><dt>Offre</dt><dd>{{ item.offre.titre|default:'Candidature spontanée' }}</dd></div>
+      <div><dt>E-mail</dt><dd><a href="mailto:{{ item.email }}">{{ item.email }}</a></dd></div>
+      <div><dt>Téléphone</dt><dd>{{ item.telephone }}</dd></div>
+      <div><dt>Reçue le</dt><dd>{{ item.date_postulation|date:'d/m/Y H:i' }}</dd></div>
+      <div><dt>CV</dt><dd><a href="{% url 'vitrine_admin:application_cv' item.pk %}">Télécharger le PDF ↗</a></dd></div>
+      <div><dt>Message</dt><dd>{{ item.lettre_motivation|default:'—'|linebreaksbr }}</dd></div>
+      {% for key,answer in item.reponses.items %}<div><dt>{{ answer.question }}</dt><dd>{{ answer.reponse|default:'—' }}</dd></div>{% endfor %}
+    {% endif %}
+  </dl>
+  {% if kind == 'messages' %}
+    {% if replies %}
+      <section class="reply-history"><h2>Réponses envoyées</h2>
+        {% for reply in replies %}<article><small>{{ reply.sent_at|date:'d/m/Y H:i' }}</small><p>{{ reply.message|linebreaksbr }}</p></article>{% endfor %}
+      </section>
+    {% endif %}
+    <section class="reply-panel"><h2>Répondre à {{ item.nom }}</h2>
+      {% if reply_enabled %}
+        <p>Le message sera envoyé depuis l’adresse de contact MATRANS à {{ item.email }}.</p>
+        <form method="post" novalidate>{% csrf_token %}<input type="hidden" name="action" value="reply">
+          <div class="field"><label for="{{ reply_form.message.id_for_label }}">Votre réponse</label>{{ reply_form.message }}{{ reply_form.message.errors }}</div>
+          <button class="button" type="submit">Envoyer la réponse ↗</button>
+        </form>
+      {% else %}
+        <p>L’envoi depuis le studio sera disponible après la configuration de la messagerie. Le message reçu reste enregistré ici.</p>
+      {% endif %}
+    </section>
+    <form method="post">{% csrf_token %}<input type="hidden" name="action" value="toggle"><button class="button secondary" type="submit">{% if item.traite %}Marquer à traiter{% else %}Marquer comme traité{% endif %}</button></form>
+  {% endif %}
+</div>
+{% endblock %}

@@ -4,8 +4,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
 from .forms import CandidatureForm, ContactForm
+from .email_delivery import MailDeliveryError, MailNotConfigured, notify_contact
 from .map_geometry import MAP_HEIGHT, MAP_WIDTH, project
-from .models import Activite, CentreVitrine, Evenement, MembreEquipe, OffreEmploi, Partenaire, SiteContent
+from .models import Activite, CentreVitrine, Evenement, MembreEquipe, OffreEmploi, Partenaire, PresenceVille, SiteContent
 
 
 def _context(**extra):
@@ -20,6 +21,11 @@ def _open_offers():
 
 def _map_data():
     centres = list(CentreVitrine.objects.filter(publie=True))
+    villes = list(PresenceVille.objects.filter(publie=True))
+    for ville in villes:
+        x, y = project(ville.longitude, ville.latitude)
+        ville.map_x = round(x / MAP_WIDTH * 100, 3)
+        ville.map_y = round(y / MAP_HEIGHT * 100, 3)
     zones_by_name = {}
     centres_sans_point = []
     for centre in centres:
@@ -43,7 +49,10 @@ def _map_data():
     for zone in zones_by_name.values():
         zone['x'] = round(zone['x'] / len(zone['centres']), 3)
         zone['y'] = round(zone['y'] / len(zone['centres']), 3)
-    return {'zones': list(zones_by_name.values()), 'centres_total': len(centres), 'centres_sans_point': centres_sans_point}
+    return {
+        'zones': list(zones_by_name.values()), 'centres_total': len(centres),
+        'centres_sans_point': centres_sans_point, 'villes_presence': villes,
+    }
 
 
 def home(request):
@@ -98,9 +107,20 @@ def evenement_detail(request, pk):
 
 
 def contact(request):
-    form = ContactForm(request.POST or None)
+    initial = {'sujet': 'Proposition de partenariat'} if request.GET.get('objet') == 'partenariat' else None
+    form = ContactForm(request.POST or None, initial=initial)
     if request.method == 'POST' and form.is_valid():
-        form.save()
+        item = form.save()
+        try:
+            notify_contact(item)
+        except MailNotConfigured:
+            pass
+        except MailDeliveryError:
+            item.notification_status = 'erreur'
+            item.save(update_fields=['notification_status'])
+        else:
+            item.notification_status = 'envoye'
+            item.save(update_fields=['notification_status'])
         messages.success(request, 'Votre message a été reçu. Nous reviendrons vers vous.')
         return redirect('contact')
     return render(request, 'vitrine/contact.html', _context(form=form))

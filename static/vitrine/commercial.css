@@ -31,6 +31,8 @@
 .home-map-pin em{position:absolute;left:38px;top:50%;transform:translate(-4px,-50%);opacity:0;pointer-events:none;padding:6px 9px;white-space:nowrap;border-radius:5px;background:#fff;color:#174532;font-size:11px;font-weight:800;font-style:normal;transition:opacity .2s,transform .2s}
 .home-map-pin:hover,.home-map-pin:focus-visible{z-index:4}
 .home-map-pin:hover em,.home-map-pin:focus-visible em{opacity:1;transform:translate(0,-50%)}
+.home-map-city>span{width:19px;height:19px;border:2px solid #fff;background:#58c988;box-shadow:0 0 0 5px rgba(88,201,136,.23),0 6px 16px rgba(0,0,0,.2);font-size:0}
+.home-map-city em{left:26px}
 .home-map>p{margin:0;padding:10px 25px 19px;color:#c5dfcb;font-size:11px}
 .commercial-method{background:#fff}
 .activity-card{position:relative}
