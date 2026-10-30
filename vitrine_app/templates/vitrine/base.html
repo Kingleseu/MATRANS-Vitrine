@@ -5,7 +5,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#123d31">
-  <meta name="description" content="MATRANS S.A.R.L. — manutention et transport en République démocratique du Congo.">
+  <meta name="description" content="{% block meta_description %}MATRANS S.A.R.L. accompagne la distribution et la manutention en République démocratique du Congo avec des équipes formées et supervisées.{% endblock %}">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_CD">
+  <meta property="og:site_name" content="MATRANS S.A.R.L.">
+  <meta property="og:title" content="MATRANS · Distribution et manutention en RDC">
+  <meta property="og:description" content="Des équipes formées et supervisées pour vos opérations de distribution et de manutention en RDC.">
+  <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'vitrine/images/distribution-hero.png' %}">
+  <meta name="twitter:card" content="summary_large_image">
   <title>{% block title %}MATRANS · Distribution et manutention{% endblock %}</title>
   <link rel="icon" href="{% static 'images/logo_MATRANS.jpeg' %}">
   <link rel="stylesheet" href="{% static 'vitrine/site.css' %}">

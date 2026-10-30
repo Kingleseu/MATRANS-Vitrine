@@ -47,7 +47,6 @@
       </div>
     </div>
   </div>
-  {% if not site.about_distribution_image or not site.about_handling_image %}<p class="shell visual-note">Photo MATRANS et illustration de présentation. Vous pouvez remplacer ces visuels dans le studio.</p>{% endif %}
 </section>
 
 {% if site.mission or site.vision %}<section class="section soft"><div class="shell grid three">{% if site.mission %}<article class="card" data-reveal><p class="eyebrow">Notre mission</p><div class="article-body">{{ site.mission|linebreaks }}</div></article>{% endif %}{% if site.vision %}<article class="card" data-reveal><p class="eyebrow">Notre vision</p><div class="article-body">{{ site.vision|linebreaks }}</div></article>{% endif %}</div></section>{% endif %}

@@ -29,7 +29,6 @@
     </div>
   </div>
   <div class="hero-bottom"><div class="shell"><span>Distribution</span><span>Manutention</span><span>République démocratique du Congo</span></div></div>
-  {% if not site.hero_image %}<span class="hero-visual-note">Visuel d’illustration provisoire</span>{% endif %}
 </section>
 
 <section class="home-presence" aria-labelledby="presence-title">
@@ -37,7 +36,7 @@
     <div class="home-presence-copy" data-reveal>
       <p class="eyebrow">Présence en RDC</p>
       <h2 id="presence-title">Du terrain à l’échelle du pays.</h2>
-      <p class="lead">Explorez les centres de distribution présentés par MATRANS. Les points de cette carte représentent des villes ou zones estimées et peuvent être corrigés dans le studio.</p>
+      <p class="lead">Explorez les centres de distribution présentés par MATRANS. Les points indiquent les villes ou les zones où ils se trouvent ; leurs emplacements exacts restent à confirmer.</p>
       <div class="presence-count"><strong>{{ centres_total }}</strong><span>centres présentés sur notre carte</span></div>
       <a class="button outline" href="{% url 'activites' %}#carte-centres">Explorer la carte et les centres <span aria-hidden="true">↗</span></a>
     </div>
