@@ -1,0 +1,95 @@
+{% extends 'vitrine/base.html' %}
+{% load static l10n %}
+{% block title %}Nos activités et centres · MATRANS{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'vitrine/map.css' %}"><link rel="stylesheet" href="{% static 'vitrine/commercial.css' %}">{% endblock %}
+{% block content %}
+<section class="page-top activities-top">
+  <div class="shell section-intro">
+    <p class="eyebrow">Ce que nous faisons</p>
+    <h1>Des équipes.<br>Un territoire.</h1>
+    <p class="lead">Chargement, déchargement, encadrement des équipes et suivi opérationnel : MATRANS accompagne les flux en usine, dans les centres de distribution et sur les plateformes logistiques.</p>
+    <a class="text-link" href="#carte-centres">Découvrir nos centres <span aria-hidden="true">↘</span></a>
+  </div>
+</section>
+
+<section class="section activities-services">
+  <div class="shell">
+    <div class="section-head" data-reveal>
+      <div><p class="eyebrow">Nos savoir-faire</p><h2>Au plus près des opérations.</h2></div>
+      <p class="lead">Une présence pensée pour relier les équipes, les marchandises et les lieux de distribution.</p>
+    </div>
+    <div class="grid three">
+      {% for activite in activites %}
+      <article class="card activity-card" data-reveal>
+        {% if activite.image %}<img class="card-image" src="{{ activite.image.url }}" alt="" loading="lazy">{% else %}<div class="card-icon" aria-hidden="true">↗</div>{% endif %}
+        <span class="card-number">0{{ forloop.counter }}</span>
+        <h3>{{ activite.titre }}</h3>
+        <p>{{ activite.description_complete|linebreaksbr }}</p>
+      </article>
+      {% empty %}
+      <article class="card activity-card" data-reveal><div class="card-icon" aria-hidden="true">↗</div><span class="card-number">01</span><h3>Distribution</h3><p>La coordination des opérations dans les centres de distribution.</p></article>
+      <article class="card activity-card" data-reveal><div class="card-icon" aria-hidden="true">↗</div><span class="card-number">02</span><h3>Manutention</h3><p>Le travail de terrain autour des flux et des marchandises.</p></article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section terrain-gallery" aria-labelledby="terrain-title">
+  <div class="shell">
+    <div class="section-head" data-reveal><div><p class="eyebrow">Preuves terrain</p><h2 id="terrain-title">Des opérations, dans des environnements variés.</h2></div><p class="lead">Photographies issues de la présentation commerciale MATRANS (2026).</p></div>
+    <div class="terrain-grid">
+      <figure data-reveal><img src="{% static 'vitrine/images/terrain-quai-matrans.jpg' %}" alt="Cariste MATRANS sous un portique industriel" loading="lazy"><figcaption><strong>Plateforme sous portique</strong><span>Chargement par chariot élévateur</span></figcaption></figure>
+      <figure data-reveal><img src="{% static 'vitrine/images/camion-plateau-matrans.jpg' %}" alt="Chariot élévateur près d’un camion plateau" loading="lazy"><figcaption><strong>Camion plateau</strong><span>Manutention en plein air</span></figcaption></figure>
+      <figure data-reveal><img src="{% static 'vitrine/images/terrain-cariste-casiers-matrans.jpg' %}" alt="Cariste MATRANS déplaçant des casiers" loading="lazy"><figcaption><strong>Centre de distribution</strong><span>Mouvement des casiers</span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="section map-section" id="carte-centres">
+  <div class="shell">
+    <div class="map-heading" data-reveal>
+      <div><p class="eyebrow">Notre présence</p><h2>Nos centres, sur la carte.</h2><p class="lead">Explorez les zones pour découvrir les centres de distribution présentés par MATRANS.</p></div>
+      <div class="map-stat"><strong>{{ centres_total }}</strong><span>centre{{ centres_total|pluralize }} présenté{{ centres_total|pluralize }}</span></div>
+    </div>
+    {% if zones %}
+    <div class="map-layout" data-map-root data-reveal>
+      <div class="map-board">
+        <div class="map-board-top"><span>République démocratique du Congo</span><span class="map-board-index">01 / Territoire</span></div>
+        <div class="map-canvas" aria-label="Carte des zones de centres de distribution">
+          <img src="{% static 'vitrine/rdc-map.svg' %}" alt="Carte de la République démocratique du Congo et de ses provinces" width="900" height="900">
+          {% for zone in zones %}
+          <button type="button" class="map-pin{% if forloop.first %} is-active{% endif %}" style="--pin-x:{{ zone.x|unlocalize }}%;--pin-y:{{ zone.y|unlocalize }}%" data-map-select="{{ zone.id }}" aria-controls="{{ zone.id }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="Afficher les centres de {{ zone.nom }} ({{ zone.centres|length }})"><span class="map-pin-dot" aria-hidden="true">{{ zone.centres|length }}</span><span class="map-pin-label" aria-hidden="true">{{ zone.nom }}</span></button>
+          {% endfor %}
+        </div>
+        <div class="map-board-bottom"><span><i aria-hidden="true"></i> Repères de zone</span><span>Positions indicatives</span></div>
+      </div>
+      <div class="map-directory">
+        <div class="map-directory-head"><p class="eyebrow">Explorer les centres</p><h3>Choisissez une zone</h3><p>Sélectionnez un point sur la carte ou une zone ci-dessous.</p></div>
+        <div class="map-zone-tabs" role="group" aria-label="Choisir une zone">
+          {% for zone in zones %}<button type="button" class="map-zone-tab{% if forloop.first %} is-active{% endif %}" data-map-select="{{ zone.id }}" aria-controls="{{ zone.id }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"><span>{{ zone.nom }}</span><small>{{ zone.centres|length }}</small></button>{% endfor %}
+        </div>
+        <div class="map-zone-panels" aria-live="polite">
+          {% for zone in zones %}
+          <div class="map-zone-panel" id="{{ zone.id }}" data-map-panel="{{ zone.id }}" {% if not forloop.first %}hidden{% endif %}>
+            <div class="map-zone-title"><span>Zone {{ forloop.counter|stringformat:"02d" }}</span><h4>{{ zone.nom }}</h4><p>{{ zone.centres|length }} centre{{ zone.centres|length|pluralize }} à découvrir</p></div>
+            <div class="map-centre-list">
+              {% for centre in zone.centres %}
+              <article class="map-centre-card"><div class="map-centre-number">{{ forloop.counter|stringformat:"02d" }}</div><div><h5>{{ centre.nom }}</h5><p>{% if centre.ville %}{{ centre.ville }}{% else %}Ville à préciser{% endif %}{% if centre.province %} · {{ centre.province }}{% endif %}</p>{% if centre.description %}<p class="map-centre-description">{{ centre.description|linebreaksbr }}</p>{% endif %}{% if centre.localisation_indicative %}<span class="map-approx">Localisation à confirmer</span>{% endif %}</div></article>
+              {% endfor %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <p class="map-disclaimer">Les points indiquent une ville ou une zone estimée à partir du nom du centre ; ils ne représentent pas l’adresse exacte des installations. Les positions et les informations seront précisées dans notre espace de gestion. Fond cartographique : <a href="https://www.geoboundaries.org/" target="_blank" rel="noopener noreferrer">geoBoundaries</a> / OpenStreetMap (<a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener noreferrer">ODbL</a>).</p>
+    {% else %}
+    <div class="empty-note">La carte des centres sera affichée dès que leurs fiches publiques seront prêtes.</div>
+    {% endif %}
+    {% if centres_sans_point %}<div class="map-unlocated"><h3>Autres centres</h3><p>Ces centres seront ajoutés à la carte dès que leur localisation sera renseignée.</p>{% for centre in centres_sans_point %}<span>{{ centre.nom }}</span>{% endfor %}</div>{% endif %}
+  </div>
+</section>
+
+<section class="section soft"><div class="shell"><div class="callout"><div><p class="eyebrow light">Une question ?</p><h2>Échangeons sur vos besoins.</h2></div><a class="button primary" href="{% url 'contact' %}">Nous contacter ↗</a></div></div></section>
+{% endblock %}
+{% block extra_scripts %}<script src="{% static 'vitrine/map.js' %}" defer></script>{% endblock %}

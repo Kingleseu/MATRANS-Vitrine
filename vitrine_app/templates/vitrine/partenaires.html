@@ -1,0 +1,6 @@
+{% extends 'vitrine/base.html' %}
+{% block title %}Partenaires · MATRANS{% endblock %}
+{% block content %}
+<section class="page-top"><div class="shell section-intro"><p class="eyebrow">Collaborations</p><h1>Nos partenaires.</h1><p class="lead">Les organisations présentées ici ont autorisé la publication de leur nom ou de leur logo.</p></div></section>
+<section class="section"><div class="shell">{% if partenaires %}<div class="partner-grid">{% for partenaire in partenaires %}<article class="partner-tile" data-reveal><div>{% if partenaire.logo %}<img src="{{ partenaire.logo.url }}" alt="{{ partenaire.nom }}" loading="lazy">{% else %}<h2 style="font-size:22px">{{ partenaire.nom }}</h2>{% endif %}{% if partenaire.description %}<p class="muted" style="font-size:13px;margin:12px 0 0">{{ partenaire.description }}</p>{% endif %}{% if partenaire.site_web %}<a class="text-link" style="font-size:12px;margin-top:13px" href="{{ partenaire.site_web }}" target="_blank" rel="noopener noreferrer">Site officiel ↗</a>{% endif %}</div></article>{% endfor %}</div>{% else %}<div class="empty-note">Cette rubrique sera complétée prochainement.</div>{% endif %}</div></section>
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends 'vitrine/base.html' %}
+{% load static l10n %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'vitrine/commercial.css' %}?v=20261030-2">{% endblock %}
+{% block content %}
+<section class="hero visual-hero">
+  {% if site.hero_image %}
+    <img class="hero-image" src="{{ site.hero_image.url }}" alt="" fetchpriority="high">
+  {% else %}
+    <img class="hero-image" src="{% static 'vitrine/images/distribution-hero.png' %}" alt="" fetchpriority="high">
+  {% endif %}
+  <div class="shell hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow light">{{ site.hero_kicker }}</p>
+      <h1>{{ site.hero_title }}{% if site.hero_title_accent %} <em>{{ site.hero_title_accent }}</em>{% endif %}</h1>
+      <p class="lead">{{ site.hero_text }}</p>
+      <div class="hero-actions">
+        <a class="button primary" href="{% url 'activites' %}">Découvrir nos activités <span aria-hidden="true">↗</span></a>
+        <a class="button ghost" href="{% url 'a_propos' %}">Qui sommes-nous</a>
+      </div>
+    </div>
+    <div class="hero-proof" aria-label="MATRANS en chiffres">
+      <p class="hero-proof-heading">Notre impact, en chiffres</p>
+      <div class="hero-proof-grid">
+        <div><strong>{{ site.metric_caristes }}</strong><span>caristes formés</span></div>
+        <div><strong>{{ site.metric_manutentionnaires }}</strong><span>manutentionnaires gérés</span></div>
+        <div class="wide"><strong>{{ site.metric_casiers }}</strong><span>casiers traités en moyenne par jour</span></div>
+      </div>
+      <small>{{ site.metric_source }}</small>
+    </div>
+  </div>
+  <div class="hero-bottom"><div class="shell"><span>Distribution</span><span>Manutention</span><span>République démocratique du Congo</span></div></div>
+  {% if not site.hero_image %}<span class="hero-visual-note">Visuel d’illustration provisoire</span>{% endif %}
+</section>
+
+<section class="home-presence" aria-labelledby="presence-title">
+  <div class="shell home-presence-grid">
+    <div class="home-presence-copy" data-reveal>
+      <p class="eyebrow">Présence en RDC</p>
+      <h2 id="presence-title">Du terrain à l’échelle du pays.</h2>
+      <p class="lead">Explorez les centres de distribution présentés par MATRANS. Les points de cette carte représentent des villes ou zones estimées et peuvent être corrigés dans le studio.</p>
+      <div class="presence-count"><strong>{{ centres_total }}</strong><span>centres présentés sur notre carte</span></div>
+      <a class="button outline" href="{% url 'activites' %}#carte-centres">Explorer la carte et les centres <span aria-hidden="true">↗</span></a>
+    </div>
+    {% if zones %}<div class="home-map" data-reveal>
+      <div class="home-map-top"><span>République démocratique du Congo</span><span>{{ zones|length }} zones</span></div>
+      <div class="home-map-canvas" aria-label="Aperçu de nos zones de centres de distribution">
+        <img src="{% static 'vitrine/rdc-map.svg' %}" alt="Contour de la République démocratique du Congo et de ses provinces" width="900" height="900">
+        {% for zone in zones %}<a class="home-map-pin" href="{% url 'activites' %}#carte-centres" style="--pin-x:{{ zone.x|unlocalize }}%;--pin-y:{{ zone.y|unlocalize }}%" aria-label="Explorer {{ zone.nom }}, {{ zone.centres|length }} centre{{ zone.centres|length|pluralize }}"><span>{{ zone.centres|length }}</span><em>{{ zone.nom }}</em></a>{% endfor %}
+      </div>
+      <p>Positions indicatives · Consultez le détail des centres sur la carte interactive.</p>
+    </div>{% endif %}
+  </div>
+</section>
+
+<section class="section soft">
+  <div class="shell split intro-visual">
+    <div data-reveal>
+      <p class="eyebrow">L'entreprise</p>
+      <h2>{{ site.about_title }}</h2>
+      <p class="lead">{{ site.about_intro }}</p>
+      <a class="text-link" href="{% url 'a_propos' %}">Découvrir MATRANS <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="intro-photo-stack" data-reveal>
+      <figure class="photo-frame photo-main">
+        {% if site.about_handling_image %}
+          <img src="{{ site.about_handling_image.url }}" alt="Scène de manutention et de coordination en entrepôt" loading="lazy">
+        {% else %}
+          <img src="{% static 'vitrine/images/cariste-matrans.jpg' %}" alt="Cariste MATRANS au travail sur un chariot élévateur" loading="lazy">
+        {% endif %}
+        <figcaption>Manutention <span>01 / 02</span></figcaption>
+      </figure>
+      <figure class="photo-frame photo-inset">
+        {% if site.about_distribution_image %}
+          <img src="{{ site.about_distribution_image.url }}" alt="Préparation de marchandises pour la distribution" loading="lazy">
+        {% else %}
+          <img src="{% static 'vitrine/images/terrain-portique-matrans.jpg' %}" alt="Chariot élévateur MATRANS sur une plateforme sous portique" loading="lazy">
+        {% endif %}
+        <figcaption>Distribution <span>02 / 02</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="shell">
+    <div class="section-head" data-reveal><div><p class="eyebrow">Nos activités</p><h2>Des gestes précis, des flux organisés.</h2></div><a class="text-link" href="{% url 'activites' %}">Toutes nos activités <span aria-hidden="true">↗</span></a></div>
+    <div class="grid {% if activites %}four{% else %}two{% endif %}">
+      {% for activite in activites %}
+        <article class="card activity-card" data-reveal>
+          {% if activite.image %}
+            <img class="card-image" src="{{ activite.image.url }}" alt="" loading="lazy">
+          {% elif forloop.counter == 1 %}
+            <img class="card-image" src="{% static 'vitrine/images/illustration-manutention-manuelle.png' %}" alt="Illustration d’une équipe de manutention manuelle" loading="lazy"><span class="visual-type">Illustration</span>
+          {% elif forloop.counter == 2 %}
+            <img class="card-image" src="{% static 'vitrine/images/terrain-cariste-distance-matrans.jpg' %}" alt="Cariste MATRANS sur une plateforme de chargement" loading="lazy">
+          {% elif forloop.counter == 3 %}
+            <img class="card-image" src="{% static 'vitrine/images/illustration-supervision.png' %}" alt="Illustration d’un superviseur coordonnant une équipe" loading="lazy"><span class="visual-type">Illustration</span>
+          {% else %}
+            <img class="card-image" src="{% static 'vitrine/images/illustration-suivi-securite.png' %}" alt="Illustration du contrôle de sécurité et du suivi des opérations" loading="lazy"><span class="visual-type">Illustration</span>
+          {% endif %}
+          <span class="card-number">0{{ forloop.counter }}</span><h3>{{ activite.titre }}</h3><p>{{ activite.description_courte }}</p><a class="text-link" href="{% url 'activites' %}">En savoir plus <span aria-hidden="true">↗</span></a>
+        </article>
+      {% empty %}
+        <article class="card activity-card" data-reveal><img class="card-image" src="{% static 'vitrine/images/distribution-livraison.png' %}" alt="Illustration provisoire de la distribution" loading="lazy"><span class="card-number">01</span><h3>Distribution</h3><p>Des produits préparés pour circuler vers leurs points de destination.</p></article>
+        <article class="card activity-card" data-reveal><img class="card-image" src="{% static 'vitrine/images/manutention-equipe.png' %}" alt="Illustration provisoire de la manutention" loading="lazy"><span class="card-number">02</span><h3>Manutention</h3><p>Une attention portée à la manipulation des produits et à la coordination des équipes.</p></article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section commercial-method" aria-labelledby="method-title">
+  <div class="shell">
+    <div class="section-head" data-reveal><div><p class="eyebrow">Notre méthode</p><h2 id="method-title">Un suivi de terrain, chaque jour.</h2></div><p class="lead">De la préparation des équipes à l’analyse des opérations, chaque étape contribue à la continuité du service.</p></div>
+    <ol class="method-steps" data-reveal><li><span>01</span><strong>Planifier</strong><p>Besoins, volumes et horaires.</p></li><li><span>02</span><strong>Affecter</strong><p>Agents et équipements adaptés.</p></li><li><span>03</span><strong>Superviser</strong><p>Présence et coordination sur site.</p></li><li><span>04</span><strong>Mesurer</strong><p>Cadence, incidents et casse.</p></li><li><span>05</span><strong>Corriger</strong><p>Analyse et actions de progrès.</p></li></ol>
+  </div>
+</section>
+
+<section class="section commercial-proof" aria-labelledby="proof-title">
+  <div class="shell commercial-proof-grid">
+    <div data-reveal><p class="eyebrow light">Expérience partenaire</p><h2 id="proof-title">Des opérations suivies avec BRACONGO.</h2><p>La présentation commerciale de MATRANS décrit une collaboration démarrée à l’usine centrale puis étendue à plusieurs centres de distribution. Elle annonce une baisse des incidents sur les plateformes gérées.</p><div class="proof-number"><strong>{{ site.metric_incidents }}</strong><span>d’incidents annoncés sur les plateformes gérées</span></div><small>{{ site.metric_source }}</small><a class="text-link light" href="{% url 'contact' %}">Échanger sur un projet <span aria-hidden="true">↗</span></a></div>
+    <figure class="proof-photo" data-reveal><img src="{% static 'vitrine/images/quai-fluvial-matrans.jpg' %}" alt="Cariste en activité près d’un quai fluvial" loading="lazy"><figcaption>Une présence sur différents terrains</figcaption></figure>
+  </div>
+</section>
+
+{% if partenaires %}<section class="section soft"><div class="shell"><div class="section-head" data-reveal><div><p class="eyebrow">Nos partenaires</p><h2>Des collaborations qui comptent.</h2></div><a class="text-link" href="{% url 'partenaires' %}">Voir nos partenaires <span aria-hidden="true">↗</span></a></div><div class="partner-grid">{% for partenaire in partenaires|slice:':8' %}<div class="partner-tile" data-reveal>{% if partenaire.logo %}<img src="{{ partenaire.logo.url }}" alt="{{ partenaire.nom }}" loading="lazy">{% else %}{{ partenaire.nom }}{% endif %}</div>{% endfor %}</div></div></section>{% endif %}
+{% if evenements %}<section class="section"><div class="shell"><div class="section-head" data-reveal><div><p class="eyebrow">La vie de MATRANS</p><h2>Événements & actualités.</h2></div><a class="text-link" href="{% url 'evenements' %}">Tout voir <span aria-hidden="true">↗</span></a></div><div class="grid three">{% for evenement in evenements %}<article class="card event-card" data-reveal>{% if evenement.image %}<img class="card-image" src="{{ evenement.image.url }}" alt="" loading="lazy">{% endif %}<span class="date">{{ evenement.date_debut|date:'d F Y' }}</span><h3>{{ evenement.titre }}</h3><p>{{ evenement.resume }}</p><a class="text-link" href="{% url 'evenement_detail' evenement.pk %}">Lire la suite <span aria-hidden="true">↗</span></a></article>{% endfor %}</div></div></section>{% endif %}
+<section class="section soft"><div class="shell"><div class="callout" data-reveal><div><p class="eyebrow light">Rejoindre l'équipe</p><h2>Votre prochain défi professionnel pourrait commencer ici.</h2></div><a class="button primary" href="{% url 'carrieres' %}">Voir les offres <span aria-hidden="true">↗</span></a></div></div></section>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'vitrine/base.html' %}
+{% load static %}
+{% block title %}Qui sommes-nous · MATRANS{% endblock %}
+{% block content %}
+<section class="about-hero">
+  <div class="shell about-hero-grid">
+    <div class="about-hero-copy" data-reveal>
+      <p class="eyebrow">Qui sommes-nous</p>
+      <h1>{{ site.about_title }}</h1>
+      <p class="lead">{{ site.about_intro }}</p>
+      <a class="text-link" href="{% url 'activites' %}">Explorer nos activités <span aria-hidden="true">↗</span></a>
+    </div>
+    <figure class="about-hero-media photo-frame" data-reveal>
+      {% if site.about_distribution_image %}
+        <img src="{{ site.about_distribution_image.url }}" alt="Préparation de marchandises pour la distribution">
+      {% else %}
+        <img src="{% static 'vitrine/images/chargement-matrans.jpg' %}" alt="Chargement de marchandises sur une plateforme logistique">
+      {% endif %}
+      <figcaption>Distribution <span>01 / 02</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section">
+  <div class="shell about-story">
+    <figure class="photo-frame about-story-media" data-reveal>
+      {% if site.about_handling_image %}
+        <img src="{{ site.about_handling_image.url }}" alt="Équipe en activité de manutention" loading="lazy">
+      {% else %}
+        <img src="{% static 'vitrine/images/manutention-equipe.png' %}" alt="Illustration d’une équipe organisée en entrepôt" loading="lazy">
+      {% endif %}
+      <figcaption>Manutention <span>Illustration</span></figcaption>
+    </figure>
+    <div data-reveal>
+      <p class="eyebrow">Notre approche</p>
+      <h2>Rigueur. Discipline. Sécurité.</h2>
+      <div class="article-body">
+        {% if site.about_body %}
+          {{ site.about_body|linebreaks }}
+        {% else %}
+          <p>Préparer, déplacer et distribuer des produits demande une organisation attentive et une bonne coordination. Nous présenterons ici l'histoire de MATRANS, ses équipes et sa manière de travailler.</p>
+        {% endif %}
+      </div>
+      <div class="about-points">
+        <div><span>01</span><strong>Équipes formées</strong><p>Recruter, former et affecter les agents selon les besoins du site.</p></div>
+        <div><span>02</span><strong>Supervision terrain</strong><p>Suivre les présences, les opérations et les points à corriger.</p></div>
+      </div>
+    </div>
+  </div>
+  {% if not site.about_distribution_image or not site.about_handling_image %}<p class="shell visual-note">Photo MATRANS et illustration de présentation. Vous pouvez remplacer ces visuels dans le studio.</p>{% endif %}
+</section>
+
+{% if site.mission or site.vision %}<section class="section soft"><div class="shell grid three">{% if site.mission %}<article class="card" data-reveal><p class="eyebrow">Notre mission</p><div class="article-body">{{ site.mission|linebreaks }}</div></article>{% endif %}{% if site.vision %}<article class="card" data-reveal><p class="eyebrow">Notre vision</p><div class="article-body">{{ site.vision|linebreaks }}</div></article>{% endif %}</div></section>{% endif %}
+{% if site.show_team and membres %}<section class="section"><div class="shell"><div class="section-head"><div><p class="eyebrow">Les personnes</p><h2>Notre équipe.</h2></div></div><div class="grid three">{% for membre in membres %}<article class="card" data-reveal>{% if membre.photo %}<img class="team-photo" src="{{ membre.photo.url }}" alt="Portrait de {{ membre.nom }}" loading="lazy">{% else %}<div class="team-placeholder" aria-hidden="true">M</div>{% endif %}<h3>{{ membre.nom }}</h3><p class="eyebrow" style="margin-bottom:12px">{{ membre.fonction }}</p>{% if membre.presentation %}<p>{{ membre.presentation }}</p>{% endif %}</article>{% endfor %}</div></div></section>{% endif %}
+<section class="section soft"><div class="shell"><div class="callout"><div><p class="eyebrow light">Travaillons ensemble</p><h2>Un projet ou une question ? Parlons-en.</h2></div><a class="button primary" href="{% url 'contact' %}">Nous contacter ↗</a></div></div></section>
+{% endblock %}
