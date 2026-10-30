@@ -3,6 +3,7 @@ from django.db import migrations
 
 def clean_seeded_copy(apps, schema_editor):
     Activite = apps.get_model('vitrine_app', 'Activite')
+    Partenaire = apps.get_model('vitrine_app', 'Partenaire')
     database = schema_editor.connection.alias
     replacements = (
         (
@@ -21,6 +22,10 @@ def clean_seeded_copy(apps, schema_editor):
             titre=title,
             description_complete=old_copy,
         ).update(description_complete=new_copy)
+    Partenaire.objects.using(database).filter(
+        nom='BRACONGO',
+        description='Collaboration présentée dans le profil commercial MATRANS (2026).',
+    ).update(description='Collaboration dans les opérations de distribution et de manutention.')
 
 
 class Migration(migrations.Migration):
