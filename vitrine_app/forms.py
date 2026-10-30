@@ -4,7 +4,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from .models import (
-    Activite, Candidature, CentreVitrine, ContactMessage, ContactReply, Evenement, MembreEquipe, PresenceVille,
+    Activite, Candidature, CentreVitrine, ContactMessage, ContactReply, Evenement, MembreEquipe,
     OffreEmploi, OffreQuestion, Partenaire, SiteContent,
 )
 
@@ -63,22 +63,6 @@ class CentreVitrineForm(StyledModelForm):
         data = super().clean()
         if (data.get('latitude') is None) != (data.get('longitude') is None):
             raise ValidationError('Renseignez la latitude et la longitude ensemble.')
-        latitude, longitude = data.get('latitude'), data.get('longitude')
-        if latitude is not None and longitude is not None and not (
-            Decimal('-13.5') <= latitude <= Decimal('5.4')
-            and Decimal('12.2') <= longitude <= Decimal('31.3')
-        ):
-            raise ValidationError('Le point doit se trouver en République démocratique du Congo.')
-        return data
-
-
-class PresenceVilleForm(StyledModelForm):
-    class Meta:
-        model = PresenceVille
-        fields = ['ville', 'province', 'latitude', 'longitude', 'publie', 'ordre']
-
-    def clean(self):
-        data = super().clean()
         latitude, longitude = data.get('latitude'), data.get('longitude')
         if latitude is not None and longitude is not None and not (
             Decimal('-13.5') <= latitude <= Decimal('5.4')

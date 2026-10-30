@@ -97,25 +97,6 @@ class CentreVitrine(models.Model):
         return self.nom
 
 
-class PresenceVille(models.Model):
-    """City-level presence, distinct from confirmed distribution centres."""
-
-    ville = models.CharField('Ville', max_length=120, unique=True)
-    province = models.CharField('Province', max_length=120)
-    latitude = models.DecimalField(max_digits=9, decimal_places=6, validators=[MinValueValidator(-90), MaxValueValidator(90)])
-    longitude = models.DecimalField(max_digits=9, decimal_places=6, validators=[MinValueValidator(-180), MaxValueValidator(180)])
-    publie = models.BooleanField('Visible sur le site', default=False)
-    ordre = models.PositiveIntegerField('Ordre d’affichage', default=0)
-
-    class Meta:
-        ordering = ['ordre', 'ville']
-        verbose_name = 'Ville d’intervention'
-        verbose_name_plural = 'Villes d’intervention'
-
-    def __str__(self):
-        return self.ville
-
-
 class Partenaire(models.Model):
     nom = models.CharField("Nom de l'entreprise / Client", max_length=150)
     logo = models.ImageField("Logo de l'entreprise", upload_to="partenaires/", blank=True)

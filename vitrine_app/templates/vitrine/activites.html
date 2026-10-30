@@ -48,7 +48,7 @@
 <section class="section map-section" id="carte-centres">
   <div class="shell">
     <div class="map-heading" data-reveal>
-      <div><p class="eyebrow">Notre présence</p><h2>Nos centres, sur la carte.</h2><p class="lead">Explorez les centres de distribution et les autres villes où MATRANS intervient.</p></div>
+      <div><p class="eyebrow">Notre présence</p><h2>Nos centres, sur la carte.</h2><p class="lead">Explorez les centres de distribution MATRANS, regroupés par zone pour faciliter la lecture.</p></div>
       <div class="map-stat"><strong>{{ centres_total }}</strong><span>centre{{ centres_total|pluralize }} présenté{{ centres_total|pluralize }}</span></div>
     </div>
     {% if zones %}
@@ -60,9 +60,8 @@
           {% for zone in zones %}
           <button type="button" class="map-pin{% if forloop.first %} is-active{% endif %}" style="--pin-x:{{ zone.x|unlocalize }}%;--pin-y:{{ zone.y|unlocalize }}%" data-map-select="{{ zone.id }}" aria-controls="{{ zone.id }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="Afficher les centres de {{ zone.nom }} ({{ zone.centres|length }})"><span class="map-pin-dot" aria-hidden="true">{{ zone.centres|length }}</span><span class="map-pin-label" aria-hidden="true">{{ zone.nom }}</span></button>
           {% endfor %}
-          {% for ville in villes_presence %}<a class="map-city-pin" href="#villes-intervention" style="--pin-x:{{ ville.map_x|unlocalize }}%;--pin-y:{{ ville.map_y|unlocalize }}%" aria-label="Voir notre présence à {{ ville.ville }}"><span aria-hidden="true"></span><em>{{ ville.ville }}</em></a>{% endfor %}
         </div>
-        <div class="map-board-bottom"><span><i aria-hidden="true"></i> Centres de distribution</span><span>Vert : autres villes · Positions indicatives</span></div>
+        <div class="map-board-bottom"><span><i aria-hidden="true"></i> Centres de distribution</span><span>Points regroupés par zone · Positions indicatives</span></div>
       </div>
       <div class="map-directory">
         <div class="map-directory-head"><p class="eyebrow">Explorer les centres</p><h3>Choisissez une zone</h3><p>Sélectionnez un point sur la carte ou une zone ci-dessous.</p></div>
@@ -88,7 +87,6 @@
     <div class="empty-note">La carte des centres sera affichée dès que leurs fiches publiques seront prêtes.</div>
     {% endif %}
     {% if centres_sans_point %}<div class="map-unlocated"><h3>Autres centres</h3><p>Ces centres seront ajoutés à la carte dès que leur localisation sera renseignée.</p>{% for centre in centres_sans_point %}<span>{{ centre.nom }}</span>{% endfor %}</div>{% endif %}
-    {% if villes_presence %}<div class="presence-cities" id="villes-intervention"><div><p class="eyebrow">Au-delà des centres</p><h3>Autres villes d’intervention</h3><p>Une présence déclarée par MATRANS dans ces villes. Ces repères correspondent aux villes, pas à l’adresse d’un CD.</p></div><div class="presence-city-list">{% for ville in villes_presence %}<article><span aria-hidden="true">●</span><strong>{{ ville.ville }}</strong><small>{{ ville.province }}</small></article>{% endfor %}</div></div>{% endif %}
   </div>
 </section>
 

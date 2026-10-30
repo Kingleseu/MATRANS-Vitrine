@@ -12,18 +12,17 @@ from django.views.decorators.http import require_POST
 from .email_delivery import MailDeliveryError, MailNotConfigured, mail_ready, send_contact_reply
 from .forms import (
     ActiviteForm, CentreVitrineForm, EvenementForm, MembreEquipeForm, OffreEmploiForm,
-    OffreQuestionForm, PartenaireForm, PresenceVilleForm, SiteContentForm, ContactReplyForm,
+    OffreQuestionForm, PartenaireForm, SiteContentForm, ContactReplyForm,
 )
 from .models import (
     Activite, Candidature, CentreVitrine, ContactMessage, ContactReply, Evenement, MembreEquipe,
-    OffreEmploi, OffreQuestion, Partenaire, PresenceVille, SiteContent,
+    OffreEmploi, OffreQuestion, Partenaire, SiteContent,
 )
 
 
 SECTIONS = {
     'activites': (Activite, ActiviteForm, 'Activités', 'Décrivez les services réellement proposés.'),
     'centres': (CentreVitrine, CentreVitrineForm, 'Centres sur la carte', 'Corrigez les positions indicatives et publiez les fiches visibles sur la carte de la RDC.'),
-    'villes': (PresenceVille, PresenceVilleForm, 'Villes d’intervention', 'Signalez une présence en ville sans la compter comme centre de distribution.'),
     'partenaires': (Partenaire, PartenaireForm, 'Partenaires', 'Publiez uniquement les collaborations autorisées.'),
     'offres': (OffreEmploi, OffreEmploiForm, "Offres d'emploi", 'Créez une offre, puis adaptez son formulaire.'),
     'evenements': (Evenement, EvenementForm, 'Événements', 'Préparez puis publiez vos actualités et événements.'),

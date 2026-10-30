@@ -6,7 +6,7 @@ from django.utils import timezone
 from .forms import CandidatureForm, ContactForm
 from .email_delivery import MailDeliveryError, MailNotConfigured, notify_contact
 from .map_geometry import MAP_HEIGHT, MAP_WIDTH, project
-from .models import Activite, CentreVitrine, Evenement, MembreEquipe, OffreEmploi, Partenaire, PresenceVille, SiteContent
+from .models import Activite, CentreVitrine, Evenement, MembreEquipe, OffreEmploi, Partenaire, SiteContent
 
 
 def _context(**extra):
@@ -21,11 +21,6 @@ def _open_offers():
 
 def _map_data():
     centres = list(CentreVitrine.objects.filter(publie=True))
-    villes = list(PresenceVille.objects.filter(publie=True))
-    for ville in villes:
-        x, y = project(ville.longitude, ville.latitude)
-        ville.map_x = round(x / MAP_WIDTH * 100, 3)
-        ville.map_y = round(y / MAP_HEIGHT * 100, 3)
     zones_by_name = {}
     centres_sans_point = []
     for centre in centres:
@@ -51,7 +46,7 @@ def _map_data():
         zone['y'] = round(zone['y'] / len(zone['centres']), 3)
     return {
         'zones': list(zones_by_name.values()), 'centres_total': len(centres),
-        'centres_sans_point': centres_sans_point, 'villes_presence': villes,
+        'centres_sans_point': centres_sans_point,
     }
 
 
