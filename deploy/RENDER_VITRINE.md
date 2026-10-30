@@ -45,7 +45,7 @@ Render fournit automatiquement `RENDER_EXTERNAL_HOSTNAME` pour son sous-domaine.
    Le dépôt propre fixe Python sur la série 3.12 avec `.python-version`, compatible avec le Django utilisé.
 2. Créer la base PostgreSQL et le disque persistant, puis le service Web avec les variables ci-dessus.
 3. Lancer le déploiement. Le build installe uniquement les dépendances de la vitrine et collecte les fichiers statiques. Au démarrage, les migrations créent les tables et le contenu initial de la vitrine.
-4. Dans le Shell Render, créer un compte éditorial avec `python manage.py createsuperuser` puis se connecter à `/gestion-vitrine/connexion/`. Ce compte est distinct des comptes locaux.
+4. Créer un premier compte éditorial, distinct des comptes locaux. Sur un service Web payant, utiliser le Shell Render avec `python manage.py createsuperuser`. Le plan gratuit n'offre pas de Shell : depuis un terminal local, exécuter `python deploy/create_vitrine_admin.py`, puis saisir **l'External Database URL** de Render et le mot de passe souhaité. Le script masque les valeurs sensibles et ne les enregistre pas. Se connecter ensuite à `/gestion-vitrine/connexion/`.
 5. Vérifier l'accueil, la page Activités, la carte, le studio, l'envoi d'un message de contact, la publication d'une image et le formulaire d'offre d'emploi. Vérifier qu'une image ajoutée reste disponible après un redéploiement et qu'un CV n'est téléchargeable que dans le studio connecté.
 6. Faire une sauvegarde de la base et du disque avant de passer du sous-domaine de test au domaine officiel de MATRANS.
 
