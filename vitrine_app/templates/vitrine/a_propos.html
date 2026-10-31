@@ -1,6 +1,7 @@
 {% extends 'vitrine/base.html' %}
 {% load static %}
 {% block title %}Qui sommes-nous · MATRANS{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'vitrine/identity.css' %}?v=20261031-1">{% endblock %}
 {% block content %}
 <section class="about-hero">
   <div class="shell about-hero-grid">
@@ -18,6 +19,22 @@
       {% endif %}
       <figcaption>Distribution <span>01 / 02</span></figcaption>
     </figure>
+  </div>
+</section>
+
+<section class="section identity-detail" aria-labelledby="identity-detail-title">
+  <div class="shell">
+    <div class="identity-heading" data-reveal>
+      <p class="eyebrow">Notre identité</p>
+      <h2 id="identity-detail-title">Ce qui nous anime.</h2>
+      <p>La raison d’être de MATRANS, ses engagements et la manière dont ses équipes travaillent sur le terrain.</p>
+    </div>
+    <div class="identity-detail-grid">
+      <article class="identity-purpose" data-reveal><span>01 / Pourquoi nous existons</span><h3>Notre raison d’être</h3><p>{{ site.raison_etre }}</p></article>
+      <article class="identity-detail-card" data-reveal><span>02 / Ce que nous faisons</span><h3>Notre mission</h3><p>{{ site.mission }}</p></article>
+      <article class="identity-detail-card" data-reveal><span>03 / Ce que nous visons</span><h3>Nos objectifs</h3><p>{{ site.objectifs }}</p></article>
+      <article class="identity-detail-card" data-reveal><span>04 / Ce que nous apportons</span><h3>Notre plus-value</h3><p>{{ site.plus_value }}</p></article>
+    </div>
   </div>
 </section>
 
@@ -47,9 +64,18 @@
       </div>
     </div>
   </div>
+  {% if not site.about_distribution_image or not site.about_handling_image %}<p class="shell visual-note">Photo MATRANS et illustration de présentation. Vous pouvez remplacer ces visuels dans le studio.</p>{% endif %}
 </section>
 
-{% if site.mission or site.vision %}<section class="section soft"><div class="shell grid three">{% if site.mission %}<article class="card" data-reveal><p class="eyebrow">Notre mission</p><div class="article-body">{{ site.mission|linebreaks }}</div></article>{% endif %}{% if site.vision %}<article class="card" data-reveal><p class="eyebrow">Notre vision</p><div class="article-body">{{ site.vision|linebreaks }}</div></article>{% endif %}</div></section>{% endif %}
+<section class="section identity-journey soft" aria-labelledby="journey-title">
+  <div class="shell identity-journey-grid">
+    <div data-reveal><p class="eyebrow">Notre parcours</p><h2 id="journey-title">Une expérience construite sur le terrain.</h2><p>{{ site.historique }}</p></div>
+    <div class="identity-values" data-reveal>
+      <article><span>Nos valeurs</span><h3>Rigueur. Discipline. Sécurité.</h3><p>{{ site.valeurs }}</p></article>
+      {% if site.vision %}<article><span>Notre vision</span><p>{{ site.vision }}</p></article>{% endif %}
+    </div>
+  </div>
+</section>
 {% if site.show_team and membres %}<section class="section"><div class="shell"><div class="section-head"><div><p class="eyebrow">Les personnes</p><h2>Notre équipe.</h2></div></div><div class="grid three">{% for membre in membres %}<article class="card" data-reveal>{% if membre.photo %}<img class="team-photo" src="{{ membre.photo.url }}" alt="Portrait de {{ membre.nom }}" loading="lazy">{% else %}<div class="team-placeholder" aria-hidden="true">M</div>{% endif %}<h3>{{ membre.nom }}</h3><p class="eyebrow" style="margin-bottom:12px">{{ membre.fonction }}</p>{% if membre.presentation %}<p>{{ membre.presentation }}</p>{% endif %}</article>{% endfor %}</div></div></section>{% endif %}
 <section class="section soft"><div class="shell"><div class="callout"><div><p class="eyebrow light">Travaillons ensemble</p><h2>Un projet ou une question ? Parlons-en.</h2></div><a class="button primary" href="{% url 'contact' %}">Nous contacter ↗</a></div></div></section>
 {% endblock %}

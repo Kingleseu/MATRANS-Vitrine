@@ -1,6 +1,6 @@
 {% extends 'vitrine/base.html' %}
 {% load static l10n %}
-{% block extra_css %}<link rel="stylesheet" href="{% static 'vitrine/commercial.css' %}?v=20261030-3"><link rel="stylesheet" href="{% static 'vitrine/partner.css' %}">{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'vitrine/commercial.css' %}?v=20261030-3"><link rel="stylesheet" href="{% static 'vitrine/partner.css' %}"><link rel="stylesheet" href="{% static 'vitrine/identity.css' %}?v=20261031-1">{% endblock %}
 {% block content %}
 <section class="hero visual-hero">
   {% if site.hero_image %}
@@ -21,14 +21,32 @@
     <div class="hero-proof" aria-label="MATRANS en chiffres">
       <p class="hero-proof-heading">Notre impact, en chiffres</p>
       <div class="hero-proof-grid">
-        <div><strong>{{ site.metric_caristes }}</strong><span>caristes formés</span></div>
-        <div><strong>{{ site.metric_manutentionnaires }}</strong><span>manutentionnaires gérés</span></div>
-        <div class="wide"><strong>{{ site.metric_casiers }}</strong><span>manipulations par jour</span></div>
+        <div><strong data-countup>{{ site.metric_caristes }}</strong><span>caristes formés</span></div>
+        <div><strong data-countup>{{ site.metric_manutentionnaires }}</strong><span>manutentionnaires gérés</span></div>
+        <div class="wide"><strong data-countup>{{ site.metric_casiers }}</strong><span>manipulations par jour</span></div>
       </div>
       <small>{{ site.metric_source }}</small>
     </div>
   </div>
   <div class="hero-bottom"><div class="shell"><span>Distribution</span><span>Manutention</span><span>République démocratique du Congo</span></div></div>
+</section>
+
+<section class="identity-intro" aria-labelledby="identity-title">
+  <div class="shell identity-intro-grid">
+    <div class="identity-lead" data-reveal>
+      <p class="eyebrow">MATRANS en bref</p>
+      <h2 id="identity-title">La manutention qui accompagne vos opérations.</h2>
+      <p>{{ site.raison_etre }}</p>
+      <a class="text-link" href="{% url 'a_propos' %}">Notre histoire et nos valeurs <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="identity-summary" data-reveal>
+      <article><span>01 / Mission</span><p>{{ site.mission }}</p></article>
+      <article><span>02 / Objectifs</span><p>{{ site.objectifs }}</p></article>
+      <article><span>03 / Plus-value</span><p>{{ site.plus_value }}</p></article>
+      <article><span>04 / Valeurs</span><p>{{ site.valeurs }}</p></article>
+      <article><span>05 / Parcours</span><p>{{ site.historique }}</p></article>
+    </div>
+  </div>
 </section>
 
 <section class="home-presence" aria-labelledby="presence-title">
@@ -37,7 +55,7 @@
       <p class="eyebrow">Présence en RDC</p>
       <h2 id="presence-title">Du terrain à l’échelle du pays.</h2>
       <p class="lead">Explorez les centres de distribution présentés par MATRANS. Les points indiquent les villes ou les zones où ils se trouvent ; leurs emplacements exacts restent à confirmer.</p>
-      <div class="presence-count"><strong>{{ centres_total }}</strong><span>centres présentés sur notre carte</span></div>
+      <div class="presence-count"><strong data-countup>{{ centres_total }}</strong><span>centres présentés sur notre carte</span></div>
       <a class="button outline" href="{% url 'activites' %}#carte-centres">Explorer la carte et les centres <span aria-hidden="true">↗</span></a>
     </div>
     {% if zones %}<div class="home-map" data-reveal>
@@ -116,7 +134,7 @@
 
 <section class="section commercial-proof" aria-labelledby="proof-title">
   <div class="shell commercial-proof-grid">
-    <div data-reveal><p class="eyebrow light">Expérience partenaire</p><h2 id="proof-title">Des opérations suivies avec BRACONGO.</h2><p>La présentation commerciale de MATRANS décrit une collaboration démarrée à l’usine centrale puis étendue à plusieurs centres de distribution. Elle annonce une baisse des incidents sur les plateformes gérées.</p><div class="proof-number"><strong>{{ site.metric_incidents }}</strong><span>d’incidents annoncés sur les plateformes gérées</span></div><small>{{ site.metric_source }}</small><a class="text-link light" href="{% url 'contact' %}">Échanger sur un projet <span aria-hidden="true">↗</span></a></div>
+    <div data-reveal><p class="eyebrow light">Expérience partenaire</p><h2 id="proof-title">Des opérations suivies avec BRACONGO.</h2><p>La présentation commerciale de MATRANS décrit une collaboration démarrée à l’usine centrale puis étendue à plusieurs centres de distribution. Elle annonce une baisse des incidents sur les plateformes gérées.</p><div class="proof-number"><strong data-countup>{{ site.metric_incidents }}</strong><span>d’incidents annoncés sur les plateformes gérées</span></div><small>{{ site.metric_source }}</small><a class="text-link light" href="{% url 'contact' %}">Échanger sur un projet <span aria-hidden="true">↗</span></a></div>
     <figure class="proof-photo" data-reveal><img src="{% static 'vitrine/images/quai-fluvial-matrans.jpg' %}" alt="Cariste en activité près d’un quai fluvial" loading="lazy"><figcaption>Une présence sur différents terrains</figcaption></figure>
   </div>
 </section>

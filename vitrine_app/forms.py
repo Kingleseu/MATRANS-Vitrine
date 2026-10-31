@@ -26,7 +26,8 @@ class SiteContentForm(StyledModelForm):
             'metric_incidents', 'metric_source',
             'about_title', 'about_intro', 'about_body',
             'about_distribution_image', 'about_handling_image',
-            'mission', 'vision', 'contact_email', 'contact_phone',
+            'raison_etre', 'mission', 'objectifs', 'plus_value', 'historique', 'valeurs', 'vision',
+            'contact_email', 'contact_phone',
             'contact_address', 'facebook_url', 'instagram_url',
             'linkedin_url', 'youtube_url', 'show_team',
         ])
@@ -40,6 +41,11 @@ class SiteContentForm(StyledModelForm):
             'about_intro': forms.Textarea(attrs={'rows': 3}),
             'about_body': forms.Textarea(attrs={'rows': 5}),
             'mission': forms.Textarea(attrs={'rows': 3}),
+            'raison_etre': forms.Textarea(attrs={'rows': 3}),
+            'objectifs': forms.Textarea(attrs={'rows': 3}),
+            'plus_value': forms.Textarea(attrs={'rows': 3}),
+            'historique': forms.Textarea(attrs={'rows': 4}),
+            'valeurs': forms.Textarea(attrs={'rows': 3}),
             'vision': forms.Textarea(attrs={'rows': 3}),
         }
 
