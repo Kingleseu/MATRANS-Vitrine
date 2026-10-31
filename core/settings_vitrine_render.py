@@ -97,23 +97,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = Path(os.environ.get('MEDIA_ROOT', '/var/data/media'))
 PRIVATE_MEDIA_ROOT = Path(os.environ.get('PRIVATE_MEDIA_ROOT', '/var/data/private_media'))
 
-# The mailbox receives notifications through Brevo's HTTPS API on Render Free.
-CONTACT_FROM_EMAIL = os.environ.get('CONTACT_FROM_EMAIL', 'contact@matrans-sarl.com').strip()
-CONTACT_INBOX_EMAIL = os.environ.get('CONTACT_INBOX_EMAIL', 'contact@matrans-sarl.com').strip()
+# Optional contact notifications and replies through Brevo's HTTPS API.
 BREVO_API_KEY = os.environ.get('BREVO_API_KEY', '').strip()
-
-# SMTP remains available for a later paid deployment, but Render Free blocks
-# outbound SMTP ports. The contact workflow above never uses this backend.
-MAILERS = {'default': {
-    'BACKEND': 'django.core.mail.backends.smtp.EmailBackend',
-    'OPTIONS': {
-        'host': os.environ.get('SMTP_HOST', 'localhost'),
-        'port': int(os.environ.get('SMTP_PORT', '25')),
-        'username': os.environ.get('SMTP_USER', ''),
-        'password': os.environ.get('SMTP_PASSWORD', ''),
-        'use_tls': os.environ.get('SMTP_USE_TLS', '').lower() in {'1', 'true', 'yes'},
-    },
-}}
+CONTACT_FROM_EMAIL = os.environ.get('CONTACT_FROM_EMAIL', '').strip()
+CONTACT_INBOX_EMAIL = os.environ.get('CONTACT_INBOX_EMAIL', '').strip()
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True

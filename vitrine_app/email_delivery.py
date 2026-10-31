@@ -25,7 +25,11 @@ class MailDeliveryError(Exception):
 
 
 def mail_ready():
-    return bool(settings.BREVO_API_KEY and settings.CONTACT_FROM_EMAIL)
+    return bool(
+        settings.BREVO_API_KEY
+        and settings.CONTACT_FROM_EMAIL
+        and settings.CONTACT_INBOX_EMAIL
+    )
 
 
 def send_email(*, recipient, subject, body, reply_to=None):

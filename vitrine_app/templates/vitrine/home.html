@@ -1,6 +1,6 @@
 {% extends 'vitrine/base.html' %}
 {% load static l10n %}
-{% block extra_css %}<link rel="stylesheet" href="{% static 'vitrine/commercial.css' %}?v=20261030-3"><link rel="stylesheet" href="{% static 'vitrine/partner.css' %}"><link rel="stylesheet" href="{% static 'vitrine/identity.css' %}?v=20261031-1">{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'vitrine/commercial.css' %}?v=20261030-3"><link rel="stylesheet" href="{% static 'vitrine/partner.css' %}"><link rel="stylesheet" href="{% static 'vitrine/identity.css' %}?v=20261031-2">{% endblock %}
 {% block content %}
 <section class="hero visual-hero">
   {% if site.hero_image %}
@@ -28,24 +28,27 @@
       <small>{{ site.metric_source }}</small>
     </div>
   </div>
-  <div class="hero-bottom"><div class="shell"><span>Distribution</span><span>Manutention</span><span>République démocratique du Congo</span></div></div>
+  <div class="hero-bottom"><div class="shell"><span class="hero-bottom-accent" aria-hidden="true"></span><p>{% if site.mission %}{{ site.mission }}{% else %}Des équipes préparées et présentes sur le terrain pour accompagner vos opérations de manutention.{% endif %}</p></div></div>
 </section>
 
 <section class="identity-intro" aria-labelledby="identity-title">
   <div class="shell identity-intro-grid">
     <div class="identity-lead" data-reveal>
-      <p class="eyebrow">MATRANS en bref</p>
-      <h2 id="identity-title">La manutention qui accompagne vos opérations.</h2>
-      <p>{{ site.raison_etre }}</p>
-      <a class="text-link" href="{% url 'a_propos' %}">Notre histoire et nos valeurs <span aria-hidden="true">↗</span></a>
+      <p class="eyebrow">Au cœur de vos opérations</p>
+      <h2 id="identity-title">Pour que vos opérations avancent, <em>nous préparons le terrain.</em></h2>
+      <p class="identity-lead-primary">{{ site.raison_etre }}</p>
+      {% if site.valeurs %}<p class="identity-lead-secondary">{{ site.valeurs }}</p>{% endif %}
+      <a class="text-link" href="{% url 'a_propos' %}">Découvrir notre manière de travailler <span aria-hidden="true">↗</span></a>
     </div>
-    <div class="identity-summary" data-reveal>
-      <article><span>01 / Mission</span><p>{{ site.mission }}</p></article>
-      <article><span>02 / Objectifs</span><p>{{ site.objectifs }}</p></article>
-      <article><span>03 / Plus-value</span><p>{{ site.plus_value }}</p></article>
-      <article><span>04 / Valeurs</span><p>{{ site.valeurs }}</p></article>
-      <article><span>05 / Parcours</span><p>{{ site.historique }}</p></article>
-    </div>
+    <figure class="identity-scene" data-reveal>
+      <img src="{% static 'vitrine/images/terrain-cariste-casiers-matrans.jpg' %}" alt="Cariste en activité auprès des casiers sur un site de distribution" loading="lazy">
+      <figcaption><span class="identity-scene-line" aria-hidden="true"></span><span>Une présence concrète, au plus près du terrain.</span></figcaption>
+    </figure>
+  </div>
+  <div class="shell identity-continuity" data-reveal>
+    <span class="identity-continuity-mark" aria-hidden="true">↗</span>
+    <p>{{ site.objectifs }}</p>
+    <span class="identity-continuity-note">À chaque site son rythme. À chaque opération, une réponse adaptée.</span>
   </div>
 </section>
 
