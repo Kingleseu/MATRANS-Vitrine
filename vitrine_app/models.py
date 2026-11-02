@@ -67,13 +67,23 @@ class Activite(models.Model):
 class CentreVitrine(models.Model):
     """Fiche publique indépendante des données opérationnelles des CD."""
 
+    CATEGORIES_ACTIVITE = [
+        ('mecanisee', 'Manutention mécanisée'),
+        ('manuelle', 'Manutention manuelle'),
+        ('mixte', 'Mixte'),
+    ]
+
     code = models.SlugField('Identifiant', max_length=80, unique=True)
-    nom = models.CharField('Nom du centre', max_length=130)
+    nom = models.CharField('Nom du site', max_length=130)
     ville = models.CharField('Ville / commune', max_length=120, blank=True)
     province = models.CharField('Province', max_length=120, blank=True)
+    categorie_activite = models.CharField(
+        "Catégorie d'activité", max_length=10, choices=CATEGORIES_ACTIVITE,
+        blank=True, default='',
+    )
     zone_carte = models.CharField(
         'Point regroupé sur la carte', max_length=120, blank=True,
-        help_text='Les centres ayant le même nom de zone partagent un repère sur la carte. Celui-ci est placé au centre de leurs positions indicatives.',
+        help_text='Les sites ayant le même nom de zone partagent un repère sur la carte. Celui-ci est placé au centre de leurs positions indicatives.',
     )
     description = models.TextField('Présentation publique', blank=True)
     latitude = models.DecimalField(
@@ -95,8 +105,8 @@ class CentreVitrine(models.Model):
 
     class Meta:
         ordering = ['ordre', 'nom']
-        verbose_name = 'Centre de distribution public'
-        verbose_name_plural = 'Centres de distribution publics'
+        verbose_name = 'Site partenaire public'
+        verbose_name_plural = 'Sites partenaires publics'
 
     def __str__(self):
         return self.nom

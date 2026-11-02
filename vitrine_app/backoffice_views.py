@@ -22,7 +22,7 @@ from .models import (
 
 SECTIONS = {
     'activites': (Activite, ActiviteForm, 'Activités', 'Décrivez les services réellement proposés.'),
-    'centres': (CentreVitrine, CentreVitrineForm, 'Centres sur la carte', 'Corrigez les positions indicatives et publiez les fiches visibles sur la carte de la RDC.'),
+    'centres': (CentreVitrine, CentreVitrineForm, 'Sites sur la carte', "Renseignez l'activité, corrigez les positions indicatives et publiez les fiches visibles sur la carte de la RDC."),
     'partenaires': (Partenaire, PartenaireForm, 'Partenaires', 'Publiez uniquement les collaborations autorisées.'),
     'offres': (OffreEmploi, OffreEmploiForm, "Offres d'emploi", 'Créez une offre, puis adaptez son formulaire.'),
     'evenements': (Evenement, EvenementForm, 'Événements', 'Préparez puis publiez vos actualités et événements.'),

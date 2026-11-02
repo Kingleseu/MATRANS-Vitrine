@@ -57,17 +57,17 @@
     <div class="home-presence-copy" data-reveal>
       <p class="eyebrow">Présence en RDC</p>
       <h2 id="presence-title">Du terrain à l’échelle du pays.</h2>
-      <p class="lead">Explorez les centres de distribution présentés par MATRANS. Les points indiquent les villes ou les zones où ils se trouvent ; leurs emplacements exacts restent à confirmer.</p>
-      <div class="presence-count"><strong data-countup>{{ centres_total }}</strong><span>centres présentés sur notre carte</span></div>
-      <a class="button outline" href="{% url 'activites' %}#carte-centres">Explorer la carte et les centres <span aria-hidden="true">↗</span></a>
+      <p class="lead">Matrans SARL déploie ses activités en RDC sur {{ centres_total }} sites partenaires répartis dans {{ provinces_total }} provinces. Découvrez nos zones d’exploitation et les activités qui y sont exercées.</p>
+      <div class="presence-count"><strong data-countup>{{ centres_total }}</strong><span>sites partenaires sur notre carte</span></div>
+      <a class="button outline" href="{% url 'activites' %}#carte-centres">Explorer la carte et les sites <span aria-hidden="true">↗</span></a>
     </div>
     {% if zones %}<div class="home-map" data-reveal>
-      <div class="home-map-top"><span>République démocratique du Congo</span><span>{{ centres_total }} centres · {{ zones|length }} zones</span></div>
-      <div class="home-map-canvas" aria-label="Aperçu de nos zones de centres de distribution">
+      <div class="home-map-top"><span>République démocratique du Congo</span><span>{{ centres_total }} sites · {{ provinces_total }} provinces</span></div>
+      <div class="home-map-canvas" aria-label="Aperçu de nos zones d’activité">
         <img src="{% static 'vitrine/rdc-map.svg' %}" alt="Contour de la République démocratique du Congo et de ses provinces" width="900" height="900">
-        {% for zone in zones %}<a class="home-map-pin" href="{% url 'activites' %}#carte-centres" style="--pin-x:{{ zone.x|unlocalize }}%;--pin-y:{{ zone.y|unlocalize }}%" aria-label="Explorer {{ zone.nom }}, {{ zone.centres|length }} centre{{ zone.centres|length|pluralize }}"><span>{{ zone.centres|length }}</span><em>{{ zone.nom }}</em></a>{% endfor %}
+        {% for zone in zones %}<a class="home-map-pin" href="{% url 'activites' %}#carte-centres" style="--pin-x:{{ zone.x|unlocalize }}%;--pin-y:{{ zone.y|unlocalize }}%" aria-label="Explorer {{ zone.nom }}, {{ zone.centres|length }} site{{ zone.centres|length|pluralize }}"><span>{{ zone.centres|length }}</span><em>{{ zone.nom }}</em></a>{% endfor %}
       </div>
-      <p>Les repères regroupent les centres par zone · Positions indicatives.</p>
+      <p>Les repères regroupent les sites par zone · Positions indicatives.</p>
     </div>{% endif %}
   </div>
 </section>

@@ -60,13 +60,15 @@ class CentreVitrineForm(StyledModelForm):
     class Meta:
         model = CentreVitrine
         fields = [
-            'code', 'nom', 'ville', 'province', 'zone_carte', 'description',
+            'code', 'nom', 'ville', 'province', 'categorie_activite', 'zone_carte', 'description',
             'latitude', 'longitude', 'localisation_indicative', 'publie', 'ordre',
         ]
         widgets = {'description': forms.Textarea(attrs={'rows': 4})}
 
     def clean(self):
         data = super().clean()
+        if data.get('publie') and not data.get('categorie_activite'):
+            raise ValidationError("Choisissez le type d'activité avant de publier ce site.")
         if (data.get('latitude') is None) != (data.get('longitude') is None):
             raise ValidationError('Renseignez la latitude et la longitude ensemble.')
         latitude, longitude = data.get('latitude'), data.get('longitude')

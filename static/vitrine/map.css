@@ -55,5 +55,27 @@
 .map-unlocated h3{font-size:20px;margin:0 0 6px}
 .map-unlocated p{font-size:13px;color:var(--muted)}
 .map-unlocated span{display:inline-block;margin:4px 6px 4px 0;padding:7px 10px;background:#e9f2ea;border-radius:5px;font-size:12px;font-weight:750}
+.map-heading .lead strong{color:#174f39;font-weight:850}
+.map-activity-tag{display:inline-flex;align-items:center;gap:8px;width:max-content;max-width:100%;padding:6px 10px;border-radius:6px;background:#e8f2eb;color:#1b6747;font-size:11px;font-weight:850;line-height:1.25}
+.map-activity-tag:before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+.map-activity-tag--manuelle{background:#fff0df;color:#9c5a20}
+.map-activity-tag--mixte{background:#e9eaf8;color:#4b5197}
+.map-centre-card .map-activity-tag{margin-top:9px}
+.map-activity-summary{margin-top:34px;padding:clamp(24px,4vw,42px);background:#fff;border:1px solid #d8e6da;border-radius:18px;box-shadow:0 16px 44px rgba(17,60,42,.06)}
+.map-activity-summary-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:25px}
+.map-activity-summary-head .eyebrow{margin-bottom:10px}
+.map-activity-summary-head h3{font-size:clamp(27px,3vw,38px);line-height:1.12;margin:0;max-width:650px}
+.map-activity-summary-head>p{max-width:260px;margin:0;color:#607267;font-size:14px;line-height:1.5}
+.map-activity-table-scroll{overflow-x:auto;border:1px solid #e0eae1;border-radius:11px}
+.map-activity-table{border-collapse:collapse;width:100%;min-width:720px;text-align:left}
+.map-activity-table th,.map-activity-table td{padding:20px 22px;border-bottom:1px solid #e7eee8;vertical-align:top}
+.map-activity-table thead th{background:#123f30;color:#eff8ef;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:850}
+.map-activity-table thead th:first-child{width:27%}
+.map-activity-table tbody tr:last-child th,.map-activity-table tbody tr:last-child td{border-bottom:0}
+.map-activity-table tbody tr:nth-child(even){background:#f9fbf8}
+.map-activity-table tbody th small{display:block;margin-top:9px;color:#6a7a6d;font-size:12px;font-weight:550;line-height:1.4}
+.map-site-chip{display:inline-block;margin:0 7px 8px 0;padding:7px 10px;background:#f0f5f0;border:1px solid #e0e9df;border-radius:6px;color:#254c39;font-size:12px;font-weight:700;line-height:1.25}
+.map-no-sites{color:#89968a}
 @media(max-width:960px){.map-layout{grid-template-columns:1fr}.map-board{min-height:0}.map-canvas{width:min(100%,640px)}.map-directory{max-height:none;overflow:visible}.map-zone-tabs{flex-wrap:wrap}.map-directory-head{padding:30px}.map-zone-panels{padding:26px 30px 36px}}
 @media(max-width:650px){.activities-services,.map-section{padding-block:70px}.map-heading{display:block;margin-bottom:28px}.map-stat{height:auto;width:auto;min-width:0;margin-top:25px;flex-direction:row;align-items:center;gap:20px;padding:15px 19px}.map-stat strong{font-size:38px}.map-stat span{max-width:95px}.map-layout{border-radius:12px}.map-board-top,.map-board-bottom{padding:14px 16px;font-size:9px}.map-board-index{display:none}.map-pin-dot{width:22px;height:22px;border-width:2px;font-size:9px;box-shadow:0 2px 0 3px rgba(242,151,86,.22)}.map-pin:hover .map-pin-dot,.map-pin.is-active .map-pin-dot{box-shadow:0 2px 0 4px rgba(255,126,56,.28)}.map-pin-label{left:28px;font-size:9px}.map-directory-head{padding:24px 22px}.map-directory-head h3{font-size:25px}.map-zone-tabs{padding:14px 20px;gap:7px}.map-zone-panels{padding:24px 20px 30px}.map-zone-title h4{font-size:24px}}
+@media(max-width:650px){.map-activity-summary{padding:23px 17px;margin-top:24px}.map-activity-summary-head{display:block}.map-activity-summary-head>p{margin-top:10px;max-width:none}.map-activity-table{min-width:0}.map-activity-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}.map-activity-table tbody,.map-activity-table tbody tr{display:block}.map-activity-table tbody tr{padding:6px 0;border-bottom:1px solid #e7eee8}.map-activity-table tbody tr:last-child{border-bottom:0}.map-activity-table tbody th,.map-activity-table tbody td{display:block;width:auto;padding:12px 15px;border:0}.map-activity-table tbody td:before{content:attr(data-label);display:block;margin-bottom:9px;color:#607267;font-size:10px;font-weight:850;letter-spacing:.1em;text-transform:uppercase}}
