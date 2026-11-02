@@ -20,7 +20,7 @@ class SiteContent(models.Model):
     about_handling_image = models.ImageField('Image de manutention', upload_to='vitrine/presentation/', blank=True, help_text="Remplace l'illustration de manutention sur l'accueil et la présentation.")
     mission = models.TextField(blank=True)
     vision = models.TextField(blank=True)
-    raison_etre = models.TextField('Raison d’être', default='Permettre aux entreprises de se concentrer sur leur métier pendant que leurs opérations de manutention sont organisées, encadrées et suivies sur le terrain.')
+    raison_etre = models.TextField('Raison d’être', default="Notre modèle d'externalisation sur mesure vous libère des contraintes RH liées à cette catégorie tout en veillant à la performance opérationnelle, vous permettant ainsi de sécuriser vos flux et de vous concentrer sur vos priorités stratégiques dans un esprit de partenariat durable.")
     objectifs = models.TextField('Nos objectifs', default='Assurer la continuité des opérations, adapter les équipes aux volumes de chaque site et améliorer la sécurité, la qualité et la cadence grâce au suivi de terrain.')
     plus_value = models.TextField('Notre plus-value', default='Un dispositif qui recrute et forme, affecte les équipes, supervise les opérations, organise les remplacements et suit les incidents comme la cadence.')
     historique = models.TextField('Notre parcours', default='La présentation commerciale de MATRANS retrace une collaboration avec BRACONGO commencée à l’usine centrale, puis étendue aux centres de distribution de Kinshasa et de province. Ce parcours illustre le développement de son organisation de terrain.')

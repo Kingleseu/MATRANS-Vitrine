@@ -21,18 +21,6 @@ def _open_offers():
 
 def _map_data():
     centres = list(CentreVitrine.objects.filter(publie=True))
-    activity_matrix = []
-    for code, title, detail in (
-        ('mecanisee', 'Manutention mécanisée', 'Caristes · chariots élévateurs'),
-        ('manuelle', 'Manutention manuelle', 'Manutentionnaires'),
-        ('mixte', 'Mixte', 'Caristes et manutentionnaires'),
-    ):
-        sites = [centre for centre in centres if centre.categorie_activite == code]
-        activity_matrix.append({
-            'code': code, 'title': title, 'detail': detail, 'sites': sites,
-            'kinshasa': [centre for centre in sites if centre.province.strip().casefold() == 'kinshasa'],
-            'interieur': [centre for centre in sites if centre.province.strip().casefold() != 'kinshasa'],
-        })
     zones_by_name = {}
     centres_sans_point = []
     for centre in centres:
@@ -60,7 +48,6 @@ def _map_data():
         'zones': list(zones_by_name.values()), 'centres_total': len(centres),
         'centres_sans_point': centres_sans_point,
         'provinces_total': len({centre.province.strip().casefold() for centre in centres if centre.province.strip()}),
-        'activity_matrix': activity_matrix,
     }
 
 
