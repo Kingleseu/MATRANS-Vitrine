@@ -22,3 +22,16 @@
 .page-visibility-control input:focus-visible+.page-visibility-switch{outline:3px solid var(--orange);outline-offset:3px}
 .page-visibility-note{color:var(--muted);max-width:720px;margin-bottom:20px}
 @media(max-width:590px){.page-visibility-row{padding:16px}}
+.account-back{margin:20px 0 0;font-size:13px}
+.account-back a{color:var(--green);font-weight:750;text-decoration:none}
+.account-back a:hover{text-decoration:underline}
+.login-card .field{margin:16px 0}
+.login-card .field label{margin:0 0 7px}
+.login-card .field .helptext{display:block;margin-top:7px;color:var(--muted);font-size:12px;line-height:1.5}
+.login-card .field .helptext ul,.account-form-panel .helptext ul{padding-left:20px;margin:8px 0}
+.account-list{display:grid;gap:10px}
+.account-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;background:#fff;border:1px solid var(--line);border-radius:8px}
+.account-row strong,.account-row small{display:block}
+.account-row small{color:var(--muted);margin-top:3px}
+.account-form-panel{max-width:680px}
+@media(max-width:590px){.account-row{align-items:flex-start;flex-direction:column}}

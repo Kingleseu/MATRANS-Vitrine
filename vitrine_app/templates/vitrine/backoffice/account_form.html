@@ -1,0 +1,26 @@
+{% extends 'vitrine/backoffice/base.html' %}
+{% block content %}
+<div class="content-head">
+  <div>
+    <p class="eyebrow">Administration</p>
+    <h1>Créer un compte éditeur</h1>
+    <p class="muted">Ce compte pourra modifier la vitrine, sans créer d’autres administrateurs.</p>
+  </div>
+  <a class="button secondary" href="{% url 'vitrine_admin:accounts' %}">← Retour</a>
+</div>
+<div class="panel account-form-panel">
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="field">
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {{ field }}
+      {{ field.errors }}
+      {% if field.help_text %}<small class="helptext">{{ field.help_text|safe }}</small>{% endif %}
+    </div>
+    {% endfor %}
+    {% if form.non_field_errors %}<p class="error">{{ form.non_field_errors }}</p>{% endif %}
+    <button class="button" type="submit">Créer le compte ↗</button>
+  </form>
+</div>
+{% endblock %}

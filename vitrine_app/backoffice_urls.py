@@ -1,4 +1,4 @@
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LogoutView
 from django.urls import path
 
 from . import backoffice_views as views
@@ -6,12 +6,15 @@ from . import backoffice_views as views
 app_name = 'vitrine_admin'
 
 urlpatterns = [
-    path('connexion/', LoginView.as_view(template_name='vitrine/backoffice/login.html', redirect_authenticated_user=False), name='connexion'),
+    path('connexion/', views.StudioLoginView.as_view(), name='connexion'),
+    path('initialiser/', views.initial_account, name='initial_account'),
     path('deconnexion/', LogoutView.as_view(next_page='vitrine_admin:connexion'), name='deconnexion'),
     path('', views.dashboard, name='dashboard'),
     path('contenu/', views.site_content, name='site_content'),
     path('pages/', views.page_visibility, name='page_visibility'),
     path('mot-de-passe/', views.change_password, name='change_password'),
+    path('comptes/', views.accounts_list, name='accounts'),
+    path('comptes/nouveau/', views.account_create, name='account_create'),
     path('messages/', views.messages_list, name='messages'),
     path('messages/<int:pk>/', views.message_detail, name='message_detail'),
     path('candidatures/', views.applications_list, name='applications'),

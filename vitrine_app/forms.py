@@ -1,6 +1,8 @@
 from decimal import Decimal
 
 from django import forms
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
 from .models import (
@@ -61,6 +63,22 @@ class PageVisibilityForm(forms.ModelForm):
             'page_about_visible', 'page_activities_visible', 'page_partners_visible',
             'page_events_visible', 'page_careers_visible', 'page_contact_visible',
         ]
+
+
+class StudioAccountForm(UserCreationForm):
+    email = forms.EmailField(label='Adresse e-mail', required=True)
+
+    class Meta(UserCreationForm.Meta):
+        model = get_user_model()
+        fields = ('username', 'email')
+
+
+class InitialStudioAccountForm(StudioAccountForm):
+    access_code = forms.CharField(
+        label="Code d'installation",
+        widget=forms.PasswordInput(attrs={'autocomplete': 'off'}),
+        strip=True,
+    )
 
 
 class ActiviteForm(StyledModelForm):

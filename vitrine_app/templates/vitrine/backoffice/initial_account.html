@@ -1,0 +1,42 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <title>Créer le premier accès · MATRANS Studio</title>
+  <link rel="stylesheet" href="{% static 'vitrine/backoffice.css' %}?v=20261102-2">
+</head>
+<body>
+  <main class="login-wrap">
+    <div class="login-brand">
+      <p class="eyebrow" style="color:#9fdfae">MATRANS STUDIO</p>
+      <h1>Votre espace de gestion commence ici.</h1>
+      <p>Créez le premier compte administrateur de la vitrine. Ce formulaire se fermera automatiquement dès que le compte sera créé.</p>
+    </div>
+    <div class="login-card">
+      <div class="panel">
+        <p class="eyebrow">Première connexion</p>
+        <h2>Créer mon accès</h2>
+        <p class="muted">Saisissez le code d’installation défini dans Render, puis choisissez votre identifiant et votre mot de passe.</p>
+        <form method="post" novalidate>
+          {% csrf_token %}
+          {% for field in form %}
+          <div class="field">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {{ field.errors }}
+            {% if field.help_text %}<small class="helptext">{{ field.help_text|safe }}</small>{% endif %}
+          </div>
+          {% endfor %}
+          {% if form.non_field_errors %}<p class="error">{{ form.non_field_errors }}</p>{% endif %}
+          <button class="button" type="submit">Créer mon accès ↗</button>
+        </form>
+        <p class="account-back"><a href="{% url 'vitrine_admin:connexion' %}">← Retour à la connexion</a></p>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

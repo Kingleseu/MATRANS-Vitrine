@@ -1,0 +1,19 @@
+{% extends 'vitrine/backoffice/base.html' %}
+{% block content %}
+<div class="content-head">
+  <div>
+    <p class="eyebrow">Administration</p>
+    <h1>Comptes du studio</h1>
+    <p class="muted">Créez un accès personnel pour chaque éditeur de la vitrine. Chaque compte possède son propre mot de passe.</p>
+  </div>
+  <a class="button" href="{% url 'vitrine_admin:account_create' %}">Créer un compte ↗</a>
+</div>
+<div class="account-list">
+  {% for user in users %}
+  <div class="account-row">
+    <div><strong>{{ user.username }}</strong><small>{{ user.email|default:'Adresse e-mail non renseignée' }}</small></div>
+    <span class="status{% if not user.is_active %} draft{% endif %}">{% if not user.is_active %}Inactif{% elif user.is_superuser %}Administrateur{% else %}Éditeur{% endif %}</span>
+  </div>
+  {% empty %}<p class="empty">Aucun compte.</p>{% endfor %}
+</div>
+{% endblock %}
