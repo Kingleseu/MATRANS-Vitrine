@@ -6,3 +6,4 @@
 .partner-card .text-link{display:inline-block;font-size:12px;margin-top:13px}
 .partner-initial{display:grid;place-items:center;width:72px;height:72px;margin:0 auto 12px;border-radius:18px;background:#e4f2e7;color:#176346;font-size:34px;font-weight:900}
 .partner-cta-copy{color:#d8e9db;max-width:570px;margin:14px 0 0}
+.partner-section-intro{max-width:620px;margin:18px 0 0;color:var(--muted);font-size:clamp(16px,1.5vw,18px);line-height:1.65}
