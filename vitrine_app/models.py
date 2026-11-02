@@ -11,7 +11,7 @@ class SiteContent(models.Model):
     hero_kicker = models.CharField(max_length=100, default='MATRANS S.A.R.L. · République démocratique du Congo')
     hero_title = models.CharField(max_length=180, default='Vous gérez votre métier.')
     hero_title_accent = models.CharField('Suite du titre en orange', max_length=180, blank=True, default='')
-    hero_text = models.TextField(default='Nous formons et accompagnons les équipes de manutention au plus près du terrain. Une organisation rigoureuse, attentive à la sécurité, permet à vos opérations d’avancer avec confiance.')
+    hero_text = models.TextField(default='Matrans SARL est une entreprise spécialisée dans les opérations de manutention, avec une extension naturelle vers le transport. Nous mettons à votre disposition un encadrement et un suivi opérationnel rigoureux pour répondre aux défis majeurs de votre Supply Chain : sécurité, réduction des incidents et régularité des effectifs (caristes ou manutentionnaires).')
     hero_image = models.ImageField("Image d'accueil", upload_to='vitrine/accueil/', blank=True, help_text="Remplace l'illustration provisoire de l'accueil.")
     about_title = models.CharField(max_length=160, default='Des équipes engagées au cœur de vos flux.')
     about_intro = models.TextField(default='MATRANS S.A.R.L. organise le chargement et le déchargement par chariots élévateurs, encadre les équipes sur site et accompagne les opérations de distribution en RDC.')
