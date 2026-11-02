@@ -12,7 +12,7 @@ from django.views.decorators.http import require_POST
 from .email_delivery import MailDeliveryError, MailNotConfigured, mail_ready, send_contact_reply
 from .forms import (
     ActiviteForm, CentreVitrineForm, EvenementForm, MembreEquipeForm, OffreEmploiForm,
-    OffreQuestionForm, PartenaireForm, SiteContentForm, ContactReplyForm,
+    OffreQuestionForm, PageVisibilityForm, PartenaireForm, SiteContentForm, ContactReplyForm,
 )
 from .models import (
     Activite, Candidature, CentreVitrine, ContactMessage, ContactReply, Evenement, MembreEquipe,
@@ -71,6 +71,17 @@ def site_content(request):
         form=form, title='Présentation & coordonnées', intro='Modifiez les textes, les photos, les chiffres clés et leur source avant publication.',
         return_url=reverse('vitrine_admin:dashboard'),
     ))
+
+
+@editor_required
+def page_visibility(request):
+    instance = SiteContent.objects.first() or SiteContent(pk=1)
+    form = PageVisibilityForm(request.POST or None, instance=instance)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        messages.success(request, 'La visibilité des pages a été mise à jour.')
+        return redirect('vitrine_admin:page_visibility')
+    return render(request, 'vitrine/backoffice/page_visibility.html', _layout(form=form))
 
 
 @editor_required

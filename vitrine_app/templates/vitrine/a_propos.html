@@ -9,7 +9,7 @@
       <p class="eyebrow">Qui sommes-nous</p>
       <h1>{{ site.about_title }}</h1>
       <p class="lead">{{ site.about_intro }}</p>
-      <a class="text-link" href="{% url 'activites' %}">Explorer nos activités <span aria-hidden="true">↗</span></a>
+      {% if site.page_activities_visible %}<a class="text-link" href="{% url 'activites' %}">Explorer nos activités <span aria-hidden="true">↗</span></a>{% endif %}
     </div>
     <figure class="about-hero-media photo-frame" data-reveal>
       {% if site.about_distribution_image %}
@@ -76,5 +76,7 @@
   </div>
 </section>
 {% if site.show_team and membres %}<section class="section"><div class="shell"><div class="section-head"><div><p class="eyebrow">Les personnes</p><h2>Notre équipe.</h2></div></div><div class="grid three">{% for membre in membres %}<article class="card" data-reveal>{% if membre.photo %}<img class="team-photo" src="{{ membre.photo.url }}" alt="Portrait de {{ membre.nom }}" loading="lazy">{% else %}<div class="team-placeholder" aria-hidden="true">M</div>{% endif %}<h3>{{ membre.nom }}</h3><p class="eyebrow" style="margin-bottom:12px">{{ membre.fonction }}</p>{% if membre.presentation %}<p>{{ membre.presentation }}</p>{% endif %}</article>{% endfor %}</div></div></section>{% endif %}
-<section class="section soft"><div class="shell"><div class="callout"><div><p class="eyebrow light">Travaillons ensemble</p><h2>Un projet ou une question ? Parlons-en.</h2></div><a class="button primary" href="{% url 'contact' %}">Nous contacter ↗</a></div></div></section>
+{% if site.page_contact_visible %}
+<section class="section soft"><div class="shell"><div class="callout"><div><p class="eyebrow light">Travaillons ensemble</p><h2>Un projet ou une question ? Parlons-en.</h2></div>{% if site.page_contact_visible %}<a class="button primary" href="{% url 'contact' %}">Nous contacter ↗</a>{% endif %}</div></div></section>
+{% endif %}
 {% endblock %}

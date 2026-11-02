@@ -6,3 +6,19 @@
 .reply-history small,.reply-panel>p{color:var(--muted)}
 .reply-history p{margin:8px 0 0;white-space:normal;overflow-wrap:anywhere}
 .reply-panel .field{max-width:780px;margin:15px 0}
+.page-visibility-list{display:grid;gap:12px;margin-bottom:25px}
+.page-visibility-row{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px 20px;border:1px solid var(--line);border-radius:9px;background:#f9fbf8;cursor:pointer}
+.page-visibility-row:hover{border-color:#9fbea8;background:#f3f8f2}
+.page-visibility-copy strong,.page-visibility-copy small{display:block}
+.page-visibility-copy strong{font-size:16px;color:var(--pine)}
+.page-visibility-copy small{margin-top:3px;color:var(--muted)}
+.page-visibility-row:has(input:checked) .visibility-off,.page-visibility-row:not(:has(input:checked)) .visibility-on{display:none}
+.page-visibility-control{position:relative;display:inline-flex;flex:0 0 auto;align-items:center}
+.page-visibility-control input{position:absolute;width:48px;height:28px;margin:0;opacity:0;cursor:pointer}
+.page-visibility-switch{display:block;width:48px;height:28px;border-radius:20px;background:#aab9ae;transition:background .2s;pointer-events:none}
+.page-visibility-switch:before{content:"";display:block;width:20px;height:20px;margin:4px;border-radius:50%;background:#fff;box-shadow:0 1px 4px #0003;transition:transform .2s}
+.page-visibility-control input:checked+.page-visibility-switch{background:var(--green)}
+.page-visibility-control input:checked+.page-visibility-switch:before{transform:translateX(20px)}
+.page-visibility-control input:focus-visible+.page-visibility-switch{outline:3px solid var(--orange);outline-offset:3px}
+.page-visibility-note{color:var(--muted);max-width:720px;margin-bottom:20px}
+@media(max-width:590px){.page-visibility-row{padding:16px}}

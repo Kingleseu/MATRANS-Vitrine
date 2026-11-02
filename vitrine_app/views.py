@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.db.models import Q
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
@@ -9,9 +10,18 @@ from .map_geometry import MAP_HEIGHT, MAP_WIDTH, project
 from .models import Activite, CentreVitrine, Evenement, MembreEquipe, OffreEmploi, Partenaire, SiteContent
 
 
-def _context(**extra):
-    site = SiteContent.objects.first() or SiteContent()
+def _site():
+    return SiteContent.objects.first() or SiteContent()
+
+
+def _context(*, site=None, **extra):
+    site = site or _site()
     return {'site': site, **extra}
+
+
+def _require_page(site, field):
+    if not getattr(site, field):
+        raise Http404
 
 
 def _open_offers():
@@ -62,47 +72,62 @@ def home(request):
 
 
 def a_propos(request):
-    site = SiteContent.objects.first() or SiteContent()
+    site = _site()
+    _require_page(site, 'page_about_visible')
     membres = MembreEquipe.objects.filter(publie=True) if site.show_team else MembreEquipe.objects.none()
     return render(request, 'vitrine/a_propos.html', {'site': site, 'membres': membres})
 
 def activites(request):
-    return render(request, 'vitrine/activites.html', _context(
+    site = _site()
+    _require_page(site, 'page_activities_visible')
+    return render(request, 'vitrine/activites.html', _context(site=site,
         activites=Activite.objects.filter(publiee=True),
         **_map_data(),
     ))
 
 
 def partenaires(request):
-    return render(request, 'vitrine/partenaires.html', _context(
+    site = _site()
+    _require_page(site, 'page_partners_visible')
+    return render(request, 'vitrine/partenaires.html', _context(site=site,
         partenaires=Partenaire.objects.filter(publie=True)
     ))
 
 def carrieres(request):
-    return render(request, 'vitrine/carrieres.html', _context(offres=_open_offers()))
+    site = _site()
+    _require_page(site, 'page_careers_visible')
+    return render(request, 'vitrine/carrieres.html', _context(site=site, offres=_open_offers()))
 
 def offre_detail(request, pk):
+    site = _site()
+    _require_page(site, 'page_careers_visible')
     offre = get_object_or_404(_open_offers().prefetch_related('questions'), pk=pk)
     form = CandidatureForm(request.POST or None, request.FILES or None, offre=offre)
     if request.method == 'POST' and form.is_valid():
         form.save()
         messages.success(request, 'Votre candidature a été reçue. Merci pour votre intérêt.')
         return redirect('carrieres')
-    return render(request, 'vitrine/offre_detail.html', _context(offre=offre, form=form))
+    return render(request, 'vitrine/offre_detail.html', _context(site=site, offre=offre, form=form))
 
 
 def evenements(request):
-    return render(request, 'vitrine/evenements.html', _context(
+    site = _site()
+    _require_page(site, 'page_events_visible')
+    return render(request, 'vitrine/evenements.html', _context(site=site,
         evenements=Evenement.objects.filter(publie=True)
     ))
 
 
 def evenement_detail(request, pk):
+    site = _site()
+    _require_page(site, 'page_events_visible')
     evenement = get_object_or_404(Evenement, pk=pk, publie=True)
-    return render(request, 'vitrine/evenement_detail.html', _context(evenement=evenement))
+    return render(request, 'vitrine/evenement_detail.html', _context(site=site, evenement=evenement))
 
 
 def contact(request):
+    site = _site()
+    _require_page(site, 'page_contact_visible')
     initial = {'sujet': 'Proposition de partenariat'} if request.GET.get('objet') == 'partenariat' else None
     form = ContactForm(request.POST or None, initial=initial)
     if request.method == 'POST' and form.is_valid():
@@ -119,4 +144,4 @@ def contact(request):
             item.save(update_fields=['notification_status'])
         messages.success(request, 'Votre message a été reçu. Nous reviendrons vers vous.')
         return redirect('contact')
-    return render(request, 'vitrine/contact.html', _context(form=form))
+    return render(request, 'vitrine/contact.html', _context(site=site, form=form))

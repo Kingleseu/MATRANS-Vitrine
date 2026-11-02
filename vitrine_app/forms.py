@@ -35,7 +35,11 @@ class SiteContentForm(StyledModelForm):
 
     class Meta:
         model = SiteContent
-        exclude = ['updated_at']
+        exclude = [
+            'updated_at', 'page_about_visible', 'page_activities_visible',
+            'page_partners_visible', 'page_events_visible', 'page_careers_visible',
+            'page_contact_visible',
+        ]
         widgets = {
             'hero_text': forms.Textarea(attrs={'rows': 3}),
             'about_intro': forms.Textarea(attrs={'rows': 3}),
@@ -48,6 +52,15 @@ class SiteContentForm(StyledModelForm):
             'valeurs': forms.Textarea(attrs={'rows': 3}),
             'vision': forms.Textarea(attrs={'rows': 3}),
         }
+
+
+class PageVisibilityForm(forms.ModelForm):
+    class Meta:
+        model = SiteContent
+        fields = [
+            'page_about_visible', 'page_activities_visible', 'page_partners_visible',
+            'page_events_visible', 'page_careers_visible', 'page_contact_visible',
+        ]
 
 
 class ActiviteForm(StyledModelForm):

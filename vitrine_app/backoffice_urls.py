@@ -10,6 +10,7 @@ urlpatterns = [
     path('deconnexion/', LogoutView.as_view(next_page='vitrine_admin:connexion'), name='deconnexion'),
     path('', views.dashboard, name='dashboard'),
     path('contenu/', views.site_content, name='site_content'),
+    path('pages/', views.page_visibility, name='page_visibility'),
     path('mot-de-passe/', views.change_password, name='change_password'),
     path('messages/', views.messages_list, name='messages'),
     path('messages/<int:pk>/', views.message_detail, name='message_detail'),

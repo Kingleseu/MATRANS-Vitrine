@@ -90,6 +90,8 @@
   </div>
 </section>
 
-<section class="section soft"><div class="shell"><div class="callout"><div><p class="eyebrow light">Une question ?</p><h2>Échangeons sur vos besoins.</h2></div><a class="button primary" href="{% url 'contact' %}">Nous contacter ↗</a></div></div></section>
+{% if site.page_contact_visible %}
+<section class="section soft"><div class="shell"><div class="callout"><div><p class="eyebrow light">Une question ?</p><h2>Échangeons sur vos besoins.</h2></div>{% if site.page_contact_visible %}<a class="button primary" href="{% url 'contact' %}">Nous contacter ↗</a>{% endif %}</div></div></section>
+{% endif %}
 {% endblock %}
 {% block extra_scripts %}<script src="{% static 'vitrine/map.js' %}" defer></script>{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'vitrine/backoffice/base.html' %}
+{% block content %}
+<div class="content-head">
+  <div>
+    <p class="eyebrow">Publication</p>
+    <h1>Visibilité des pages</h1>
+    <p class="muted">Choisissez les rubriques accessibles au public. Une page masquée disparaît des liens du site et son adresse affiche une page introuvable. Son contenu reste enregistré ici.</p>
+  </div>
+  <a class="button secondary" href="{% url 'home' %}" target="_blank" rel="noopener noreferrer">Voir le site ↗</a>
+</div>
+<form method="post" class="panel" novalidate>
+  {% csrf_token %}
+  {% if form.non_field_errors %}<p class="error">{{ form.non_field_errors }}</p>{% endif %}
+  <div class="page-visibility-list">
+    {% for field in form %}
+    <label class="page-visibility-row" for="{{ field.id_for_label }}">
+      <span class="page-visibility-copy"><strong>{{ field.label }}</strong><small class="visibility-on">Visible sur le site</small><small class="visibility-off">Masquée du site public</small></span>
+      <span class="page-visibility-control">{{ field }}<span class="page-visibility-switch" aria-hidden="true"></span></span>
+      {{ field.errors }}
+    </label>
+    {% endfor %}
+  </div>
+  <p class="page-visibility-note">L’accueil et ce back-office restent toujours accessibles. Les offres, événements et autres contenus masqués pourront être réactivés sans les recréer.</p>
+  <button class="button" type="submit">Enregistrer la visibilité ↗</button>
+</form>
+{% endblock %}
