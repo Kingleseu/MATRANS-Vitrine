@@ -100,7 +100,7 @@ PRIVATE_MEDIA_ROOT = Path(os.environ.get('PRIVATE_MEDIA_ROOT', '/var/data/privat
 # Optional contact notifications and replies through Brevo's HTTPS API.
 BREVO_API_KEY = os.environ.get('BREVO_API_KEY', '').strip()
 CONTACT_FROM_EMAIL = os.environ.get('CONTACT_FROM_EMAIL', '').strip()
-CONTACT_INBOX_EMAIL = os.environ.get('CONTACT_INBOX_EMAIL', '').strip()
+CONTACT_INBOX_EMAIL = os.environ.get('CONTACT_INBOX_EMAIL', 'contact@matrans-rdc.com').strip()
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
