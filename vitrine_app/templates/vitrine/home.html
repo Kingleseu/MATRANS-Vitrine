@@ -12,7 +12,7 @@
     <div class="hero-copy">
       <p class="eyebrow light">{{ site.hero_kicker }}</p>
       <h1>{{ site.hero_title }}{% if site.hero_title_accent %} <em>{{ site.hero_title_accent }}</em>{% endif %}</h1>
-      <p class="lead">{{ site.hero_text }}</p>
+      <p class="lead">{% if site.hero_text|slice:":12" == "Matrans SARL" %}<strong>Matrans SARL</strong>{{ site.hero_text|slice:"12:" }}{% else %}{{ site.hero_text }}{% endif %}</p>
       <div class="hero-actions">
         <a class="button primary" href="{% url 'activites' %}">Découvrir nos activités <span aria-hidden="true">↗</span></a>
         <a class="button ghost" href="{% url 'a_propos' %}">Qui sommes-nous</a>
