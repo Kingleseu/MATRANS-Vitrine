@@ -1,36 +1,59 @@
 {% extends 'vitrine/base.html' %}
 {% load static l10n %}
 {% block title %}Nos activités et sites · MATRANS{% endblock %}
-{% block extra_css %}<link rel="stylesheet" href="{% static 'vitrine/map.css' %}?v=20261102-3"><link rel="stylesheet" href="{% static 'vitrine/commercial.css' %}">{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'vitrine/map.css' %}?v=20261102-3"><link rel="stylesheet" href="{% static 'vitrine/commercial.css' %}"><link rel="stylesheet" href="{% static 'vitrine/activities.css' %}?v=20261103-1">{% endblock %}
 {% block content %}
-<section class="page-top activities-top">
-  <div class="shell section-intro">
-    <p class="eyebrow">Ce que nous faisons</p>
-    <h1>Des équipes.<br>Un territoire.</h1>
-    <p class="lead">Chargement, déchargement, encadrement des équipes et suivi opérationnel : MATRANS accompagne les flux en usine, dans les centres de distribution et sur les plateformes logistiques.</p>
-    <a class="text-link" href="#carte-centres">Découvrir nos sites <span aria-hidden="true">↘</span></a>
+<section class="activities-hero" aria-labelledby="activities-title">
+  <img class="activities-hero-photo" src="{% static 'vitrine/images/terrain-cariste-distance-matrans.jpg' %}" alt="" fetchpriority="high">
+  <div class="shell activities-hero-inner">
+    <div class="activities-hero-copy">
+      <p class="eyebrow light">Nos activités · En République démocratique du Congo</p>
+      <h1 id="activities-title">Vos flux avancent.<br><em>Nos équipes sont sur le terrain.</em></h1>
+      <p class="lead">De la manutention des marchandises à la supervision des équipes, MATRANS organise et suit les opérations sur chaque site selon ses besoins.</p>
+      <div class="activities-hero-actions">
+        <a class="button primary" href="#savoir-faire">Découvrir nos interventions <span aria-hidden="true">↘</span></a>
+        {% if site.page_contact_visible %}<a class="button ghost" href="{% url 'contact' %}">Parlons de votre site <span aria-hidden="true">↗</span></a>{% endif %}
+      </div>
+    </div>
+    <div class="activities-hero-note"><span>Des interventions selon vos besoins</span><strong>Manutention manuelle, mécanisée et mixte</strong><a href="#carte-centres">Explorer nos sites <span aria-hidden="true">↘</span></a></div>
   </div>
 </section>
 
-<section class="section activities-services">
+<section class="section activities-services" id="savoir-faire" aria-labelledby="services-title">
   <div class="shell">
     <div class="section-head" data-reveal>
-      <div><p class="eyebrow">Nos savoir-faire</p><h2>Au plus près des opérations.</h2></div>
-      <p class="lead">Une présence pensée pour relier les équipes, les marchandises et les lieux de distribution.</p>
+      <div><p class="eyebrow">Ce que nous prenons en charge</p><h2 id="services-title">Une réponse adaptée à la réalité de votre site.</h2></div>
+      <p class="lead">Des équipes de terrain, un encadrement et un suivi réunis autour de vos opérations.</p>
     </div>
-    <div class="grid three">
+    <div class="activities-service-grid">
       {% for activite in activites %}
-      <article class="card activity-card" data-reveal>
-        {% if activite.image %}<img class="card-image" src="{{ activite.image.url }}" alt="" loading="lazy">{% else %}<div class="card-icon" aria-hidden="true">↗</div>{% endif %}
-        <span class="card-number">0{{ forloop.counter }}</span>
-        <h3>{{ activite.titre }}</h3>
-        <p>{{ activite.description_complete|linebreaksbr }}</p>
+      <article class="activities-service" data-reveal>
+        <div class="activities-service-media">
+          {% if activite.image %}<img src="{{ activite.image.url }}" alt="" loading="lazy">
+          {% elif forloop.counter == 1 %}<img src="{% static 'vitrine/images/illustration-manutention-manuelle-v2.png' %}" alt="" loading="lazy"><span class="activities-visual-label">Illustration</span>
+          {% elif forloop.counter == 2 %}<img src="{% static 'vitrine/images/cariste-matrans.jpg' %}" alt="" loading="lazy">
+          {% elif forloop.counter == 3 %}<img src="{% static 'vitrine/images/illustration-supervision-v2.png' %}" alt="" loading="lazy"><span class="activities-visual-label">Illustration</span>
+          {% elif forloop.counter == 4 %}<img src="{% static 'vitrine/images/illustration-suivi-securite-v2.png' %}" alt="" loading="lazy"><span class="activities-visual-label">Illustration</span>
+          {% else %}<img src="{% static 'vitrine/images/chargement-matrans.jpg' %}" alt="" loading="lazy">{% endif %}
+        </div>
+        <div class="activities-service-body"><span class="activities-service-index">{{ forloop.counter|stringformat:"02d" }} / Intervention</span><h3>{{ activite.titre }}</h3><p>{{ activite.description_complete|linebreaksbr }}</p></div>
       </article>
       {% empty %}
-      <article class="card activity-card" data-reveal><div class="card-icon" aria-hidden="true">↗</div><span class="card-number">01</span><h3>Distribution</h3><p>La coordination des opérations dans les centres de distribution.</p></article>
-      <article class="card activity-card" data-reveal><div class="card-icon" aria-hidden="true">↗</div><span class="card-number">02</span><h3>Manutention</h3><p>Le travail de terrain autour des flux et des marchandises.</p></article>
+      <article class="activities-service" data-reveal><div class="activities-service-media"><img src="{% static 'vitrine/images/illustration-manutention-manuelle-v2.png' %}" alt="" loading="lazy"><span class="activities-visual-label">Illustration</span></div><div class="activities-service-body"><span class="activities-service-index">01 / Intervention</span><h3>Manutention manuelle</h3><p>Des équipes pour le chargement et le déchargement des marchandises.</p></div></article>
+      <article class="activities-service" data-reveal><div class="activities-service-media"><img src="{% static 'vitrine/images/cariste-matrans.jpg' %}" alt="" loading="lazy"></div><div class="activities-service-body"><span class="activities-service-index">02 / Intervention</span><h3>Manutention mécanisée</h3><p>Des caristes pour accompagner les opérations avec chariots élévateurs.</p></div></article>
       {% endfor %}
     </div>
+  </div>
+</section>
+
+<section class="activities-approach" aria-labelledby="approach-title">
+  <div class="shell activities-approach-inner">
+    <div class="activities-approach-intro" data-reveal><p class="eyebrow light">Une organisation lisible</p><h2 id="approach-title">Une équipe à vos côtés, du besoin au suivi.</h2><p>Notre modèle associe l’affectation des équipes, leur encadrement quotidien et la remontée des informations utiles pour ajuster les opérations.</p>{% if site.page_contact_visible %}<a class="text-link light" href="{% url 'contact' %}">Discuter de votre organisation <span aria-hidden="true">↗</span></a>{% endif %}</div>
+    <ol class="activities-approach-steps" data-reveal>
+      <li><span>01</span><div><h3>Préparer</h3><p>Adapter les effectifs et les compétences aux volumes et aux contraintes du site.</p></div></li>
+      <li><span>02</span><div><h3>Encadrer</h3><p>Coordonner les équipes, les shifts, les présences et les remplacements sur le terrain.</p></div></li>
+      <li><span>03</span><div><h3>Suivre</h3><p>Observer la cadence, les incidents et la sécurité pour orienter les actions correctives.</p></div></li>
+    </ol>
   </div>
 </section>
 
@@ -91,7 +114,7 @@
 </section>
 
 {% if site.page_contact_visible %}
-<section class="section soft"><div class="shell"><div class="callout"><div><p class="eyebrow light">Une question ?</p><h2>Échangeons sur vos besoins.</h2></div>{% if site.page_contact_visible %}<a class="button primary" href="{% url 'contact' %}">Nous contacter ↗</a>{% endif %}</div></div></section>
+<section class="section soft activities-contact"><div class="shell"><div class="callout"><div><p class="eyebrow light">Votre prochain site</p><h2>Parlons des opérations que vous souhaitez nous confier.</h2><p>Présentez-nous le lieu, les volumes et les équipes nécessaires. Nous pourrons étudier ensemble une organisation adaptée.</p></div><a class="button primary" href="{% url 'contact' %}">Présenter mon besoin <span aria-hidden="true">↗</span></a></div></div></section>
 {% endif %}
 {% endblock %}
 {% block extra_scripts %}<script src="{% static 'vitrine/map.js' %}" defer></script>{% endblock %}

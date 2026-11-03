@@ -47,3 +47,6 @@
 .visual-note{font-size:12px;color:var(--muted);margin-top:28px;margin-bottom:0}
 @media(max-width:1050px){.visual-hero .hero-art{display:none}.intro-visual,.about-hero-grid,.about-story{gap:45px}.intro-photo-stack{min-height:430px}}
 @media(max-width:750px){.visual-hero,.visual-hero .hero-inner{min-height:630px}.visual-hero .hero-inner{padding-block:80px 110px}.visual-hero:after{background:linear-gradient(90deg,rgba(5,34,27,.88),rgba(5,34,27,.57))}.intro-visual,.about-hero-grid,.about-story,.grid.two{grid-template-columns:1fr}.intro-photo-stack{min-height:440px}.about-hero-grid{padding-block:55px}.about-hero-media{height:340px}.about-story-media{height:390px}.about-points{grid-template-columns:1fr}.photo-inset{height:45%;width:55%}}
+
+/* Keep documentary photos intact while giving the small source files a consistent screen rendering. */
+img[src*="-matrans.jpg"]{filter:brightness(1.03) contrast(1.06) saturate(1.07)}

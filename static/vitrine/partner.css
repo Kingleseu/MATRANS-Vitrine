@@ -1,9 +1,38 @@
 .partner-logo{display:block;width:min(100%,145px);height:130px;object-fit:contain;margin:0 auto}
-.partner-card{min-height:230px;display:grid;place-items:center;text-align:center}
-.partner-card .partner-logo{margin-bottom:10px}
-.partner-card h2{font-size:22px;margin:0}
-.partner-card p.muted{font-size:13px;line-height:1.5;margin:12px 0 0}
-.partner-card .text-link{display:inline-block;font-size:12px;margin-top:13px}
 .partner-initial{display:grid;place-items:center;width:72px;height:72px;margin:0 auto 12px;border-radius:18px;background:#e4f2e7;color:#176346;font-size:34px;font-weight:900}
-.partner-cta-copy{color:#d8e9db;max-width:570px;margin:14px 0 0}
 .partner-section-intro{max-width:620px;margin:18px 0 0;color:var(--muted);font-size:clamp(16px,1.5vw,18px);line-height:1.65}
+
+.partners-hero{position:relative;isolation:isolate;min-height:clamp(440px,46vw,620px);display:flex;align-items:center;overflow:hidden;background:#103a2e;color:#fff}
+.partners-hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;z-index:-2}
+.partners-hero:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(7,37,28,.95) 0%,rgba(8,43,32,.82) 44%,rgba(8,43,32,.3) 100%)}
+.partners-hero-inner{padding:clamp(82px,9vw,138px) 0;position:relative}
+.partners-hero h1{max-width:850px;margin:0 0 25px;font-size:clamp(52px,7vw,96px);line-height:1.02;text-wrap:balance}
+.partners-hero h1 em{font-style:normal;color:#ffa268}
+.partners-hero-inner>p:not(.eyebrow){max-width:560px;margin:0;color:#e6f0e8;font-size:clamp(18px,1.8vw,23px);line-height:1.55}
+.partners-hero-rule{display:block;width:72px;height:4px;margin-top:35px;border-radius:4px;background:#f59b62}
+
+.partners-directory{background:#f7f7f2}
+.partners-directory-head{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:36px}
+.partners-directory-head h2{margin:0;font-size:clamp(38px,4vw,58px)}
+.partners-showcase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,510px),1fr));gap:20px}
+.partner-showcase{min-width:0;display:grid;grid-template-columns:minmax(180px,.78fr) minmax(0,1.22fr);overflow:hidden;border:1px solid #d8e2d8;border-radius:16px;background:#fff;box-shadow:0 25px 55px rgba(14,61,42,.08);transition:transform .25s ease,box-shadow .25s ease}
+.partner-showcase:hover{transform:translateY(-4px);box-shadow:0 32px 65px rgba(14,61,42,.13)}
+.partner-showcase-mark{min-height:285px;display:grid;place-items:center;padding:35px;background:linear-gradient(145deg,#fff 0%,#f0f5ee 100%);border-right:1px solid #e4ebe4}
+.partner-showcase-mark img{display:block;width:min(100%,210px);max-height:190px;object-fit:contain;filter:drop-shadow(0 10px 18px rgba(14,43,29,.08))}
+.partner-showcase-mark .partner-initial{width:116px;height:116px;margin:0;font-size:52px;border-radius:24px}
+.partner-showcase-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:clamp(30px,4vw,58px)}
+.partner-showcase-index{margin-bottom:30px;color:#c36532;font-size:11px;font-weight:850;letter-spacing:.15em;text-transform:uppercase}
+.partner-showcase-copy h3{margin:0 0 16px;color:#173c2d;font-size:clamp(30px,3.1vw,44px)}
+.partner-showcase-copy p{max-width:480px;margin:0;color:#4b6456;font-size:17px;line-height:1.7}
+.partner-showcase-copy .text-link{margin-top:24px}
+.partners-empty{padding:48px;border:1px dashed #b8cbbd;border-radius:14px;background:#fff;color:#536a5d}
+.partners-empty p{margin:0}
+
+.partners-contact{background:#123d31;color:#fff;padding:clamp(65px,7vw,105px) 0}
+.partners-contact-inner{display:flex;align-items:center;justify-content:space-between;gap:40px}
+.partners-contact h2{max-width:720px;margin:0 0 18px;font-size:clamp(37px,4.5vw,63px);text-wrap:balance}
+.partners-contact p:not(.eyebrow){max-width:620px;margin:0;color:#d1e4d7;font-size:17px;line-height:1.65}
+.partners-contact .button{flex:none}
+
+@media(max-width:750px){.partners-hero:after{background:linear-gradient(90deg,rgba(7,37,28,.9),rgba(8,43,32,.62))}.partners-directory-head{display:block}.partners-contact-inner{display:block}.partners-contact .button{margin-top:30px}}
+@media(max-width:560px){.partners-hero{min-height:420px}.partners-hero-inner{padding:76px 0}.partners-hero h1{font-size:clamp(47px,11vw,65px)}.partner-showcase{grid-template-columns:1fr}.partner-showcase-mark{min-height:220px;border-right:0;border-bottom:1px solid #e4ebe4}.partner-showcase-mark img{max-height:150px}.partner-showcase-copy{padding:28px}.partner-showcase-index{margin-bottom:18px}}

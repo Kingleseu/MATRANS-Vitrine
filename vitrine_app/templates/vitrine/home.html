@@ -1,12 +1,13 @@
 {% extends 'vitrine/base.html' %}
 {% load static l10n %}
-{% block extra_css %}<link rel="stylesheet" href="{% static 'vitrine/commercial.css' %}?v=20261030-3"><link rel="stylesheet" href="{% static 'vitrine/partner.css' %}?v=20261102-1"><link rel="stylesheet" href="{% static 'vitrine/identity.css' %}?v=20261031-2">{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'vitrine/commercial.css' %}?v=20261030-3"><link rel="stylesheet" href="{% static 'vitrine/partner.css' %}?v=20261103-1"><link rel="stylesheet" href="{% static 'vitrine/identity.css' %}?v=20261103-2">{% endblock %}
 {% block content %}
 <section class="hero visual-hero">
   {% if site.hero_image %}
     <img class="hero-image" src="{{ site.hero_image.url }}" alt="" fetchpriority="high">
   {% else %}
-    <img class="hero-image" src="{% static 'vitrine/images/distribution-hero.png' %}" alt="" fetchpriority="high">
+    <img class="hero-image" src="{% static 'vitrine/images/distribution-hero-v2.png' %}" alt="" fetchpriority="high">
+    <span class="hero-visual-note">Illustration</span>
   {% endif %}
   <div class="shell hero-inner">
     <div class="hero-copy">
@@ -25,7 +26,6 @@
         <div><strong data-countup>{{ site.metric_manutentionnaires }}</strong><span>manutentionnaires gérés</span></div>
         <div class="wide"><strong data-countup>{{ site.metric_casiers }}</strong><span>manipulations par jour</span></div>
       </div>
-      <small>{{ site.metric_source }}</small>
     </div>
   </div>
   <div class="hero-bottom"><div class="shell"><span class="hero-bottom-accent" aria-hidden="true"></span><p>{% if site.mission %}{{ site.mission }}{% else %}Des équipes préparées et présentes sur le terrain pour accompagner vos opérations de manutention.{% endif %}</p></div></div>
@@ -53,13 +53,26 @@
 </section>
 {% endif %}
 
+<section class="home-values" aria-labelledby="home-values-title">
+  <div class="shell home-values-inner" data-reveal>
+    <div class="home-values-intro">
+      <p class="eyebrow light">Ce qui nous guide</p>
+      <h2 id="home-values-title">Sur chaque site, <em>la même exigence.</em></h2>
+    </div>
+    <div class="home-values-list">
+      <div class="home-value"><span aria-hidden="true">01</span><div><h3>Rigueur</h3><p>Préparer et suivre chaque opération.</p></div></div>
+      <div class="home-value"><span aria-hidden="true">02</span><div><h3>Discipline</h3><p>Respecter les consignes et les engagements.</p></div></div>
+      <div class="home-value"><span aria-hidden="true">03</span><div><h3>Sécurité</h3><p>Veiller sur les personnes et les marchandises.</p></div></div>
+    </div>
+  </div>
+</section>
+
 <section class="identity-intro" aria-labelledby="identity-title">
   <div class="shell identity-intro-grid">
     <div class="identity-lead" data-reveal>
       <p class="eyebrow">Au cœur de vos opérations</p>
       <h2 id="identity-title">Pour que vos opérations avancent, <em>nous préparons le terrain.</em></h2>
       <p class="identity-lead-primary">{{ site.raison_etre }}</p>
-      {% if site.valeurs %}<p class="identity-lead-secondary">{{ site.valeurs }}</p>{% endif %}
       {% if site.page_about_visible %}<a class="text-link" href="{% url 'a_propos' %}">Découvrir notre manière de travailler <span aria-hidden="true">↗</span></a>{% endif %}
     </div>
     <figure class="identity-scene" data-reveal>
@@ -74,70 +87,34 @@
   </div>
 </section>
 
-<section class="section soft">
-  <div class="shell split intro-visual">
-    <div data-reveal>
-      <p class="eyebrow">L'entreprise</p>
-      <h2>{{ site.about_title }}</h2>
-      <p class="lead">{{ site.about_intro }}</p>
-      {% if site.page_about_visible %}<a class="text-link" href="{% url 'a_propos' %}">Découvrir MATRANS <span aria-hidden="true">↗</span></a>{% endif %}
-    </div>
-    <div class="intro-photo-stack" data-reveal>
-      <figure class="photo-frame photo-main">
-        {% if site.about_handling_image %}
-          <img src="{{ site.about_handling_image.url }}" alt="Scène de manutention et de coordination en entrepôt" loading="lazy">
-        {% else %}
-          <img src="{% static 'vitrine/images/cariste-matrans.jpg' %}" alt="Cariste MATRANS au travail sur un chariot élévateur" loading="lazy">
-        {% endif %}
-        <figcaption>Manutention <span>01 / 02</span></figcaption>
-      </figure>
-      <figure class="photo-frame photo-inset">
-        {% if site.about_distribution_image %}
-          <img src="{{ site.about_distribution_image.url }}" alt="Préparation de marchandises pour la distribution" loading="lazy">
-        {% else %}
-          <img src="{% static 'vitrine/images/terrain-portique-matrans.jpg' %}" alt="Chariot élévateur MATRANS sur une plateforme sous portique" loading="lazy">
-        {% endif %}
-        <figcaption>Distribution <span>02 / 02</span></figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
 {% if site.page_activities_visible %}
 <section class="section">
   <div class="shell">
-    <div class="section-head" data-reveal><div><p class="eyebrow">Nos activités</p><h2>Des gestes précis, des flux organisés.</h2></div>{% if site.page_activities_visible %}<a class="text-link" href="{% url 'activites' %}">Toutes nos activités <span aria-hidden="true">↗</span></a>{% endif %}</div>
+    <div class="section-head" data-reveal><div><p class="eyebrow">Nos activités</p><h2>La manutention, au cœur de chaque site.</h2></div><a class="text-link" href="{% url 'activites' %}">Toutes nos activités <span aria-hidden="true">↗</span></a></div>
     <div class="grid {% if activites %}four{% else %}two{% endif %}">
       {% for activite in activites %}
         <article class="card activity-card" data-reveal>
           {% if activite.image %}
             <img class="card-image" src="{{ activite.image.url }}" alt="" loading="lazy">
           {% elif forloop.counter == 1 %}
-            <img class="card-image" src="{% static 'vitrine/images/illustration-manutention-manuelle.png' %}" alt="Illustration d’une équipe de manutention manuelle" loading="lazy"><span class="visual-type">Illustration</span>
+            <img class="card-image" src="{% static 'vitrine/images/illustration-manutention-manuelle-v2.png' %}" alt="Illustration d’une équipe de manutention manuelle" loading="lazy"><span class="visual-type">Illustration</span>
           {% elif forloop.counter == 2 %}
             <img class="card-image" src="{% static 'vitrine/images/terrain-cariste-distance-matrans.jpg' %}" alt="Cariste MATRANS sur une plateforme de chargement" loading="lazy">
           {% elif forloop.counter == 3 %}
-            <img class="card-image" src="{% static 'vitrine/images/illustration-supervision.png' %}" alt="Illustration d’un superviseur coordonnant une équipe" loading="lazy"><span class="visual-type">Illustration</span>
+            <img class="card-image" src="{% static 'vitrine/images/illustration-supervision-v2.png' %}" alt="Illustration d’un superviseur coordonnant une équipe" loading="lazy"><span class="visual-type">Illustration</span>
           {% else %}
-            <img class="card-image" src="{% static 'vitrine/images/illustration-suivi-securite.png' %}" alt="Illustration du contrôle de sécurité et du suivi des opérations" loading="lazy"><span class="visual-type">Illustration</span>
+            <img class="card-image" src="{% static 'vitrine/images/illustration-suivi-securite-v2.png' %}" alt="Illustration du contrôle de sécurité et du suivi des opérations" loading="lazy"><span class="visual-type">Illustration</span>
           {% endif %}
           <span class="card-number">0{{ forloop.counter }}</span><h3>{{ activite.titre }}</h3><p>{{ activite.description_courte }}</p>{% if site.page_activities_visible %}<a class="text-link" href="{% url 'activites' %}">En savoir plus <span aria-hidden="true">↗</span></a>{% endif %}
         </article>
       {% empty %}
-        <article class="card activity-card" data-reveal><img class="card-image" src="{% static 'vitrine/images/distribution-livraison.png' %}" alt="Illustration provisoire de la distribution" loading="lazy"><span class="card-number">01</span><h3>Distribution</h3><p>Des produits préparés pour circuler vers leurs points de destination.</p></article>
-        <article class="card activity-card" data-reveal><img class="card-image" src="{% static 'vitrine/images/manutention-equipe.png' %}" alt="Illustration provisoire de la manutention" loading="lazy"><span class="card-number">02</span><h3>Manutention</h3><p>Une attention portée à la manipulation des produits et à la coordination des équipes.</p></article>
+        <article class="card activity-card" data-reveal><img class="card-image" src="{% static 'vitrine/images/distribution-livraison-v2.png' %}" alt="Illustration de la distribution" loading="lazy"><span class="visual-type">Illustration</span><span class="card-number">01</span><h3>Distribution</h3><p>Des produits préparés pour circuler vers leurs points de destination.</p></article>
+        <article class="card activity-card" data-reveal><img class="card-image" src="{% static 'vitrine/images/manutention-equipe-v2.png' %}" alt="Illustration de la manutention" loading="lazy"><span class="visual-type">Illustration</span><span class="card-number">02</span><h3>Manutention</h3><p>Une attention portée à la manipulation des produits et à la coordination des équipes.</p></article>
       {% endfor %}
     </div>
   </div>
 </section>
 {% endif %}
-
-<section class="section commercial-method" aria-labelledby="method-title">
-  <div class="shell">
-    <div class="section-head" data-reveal><div><p class="eyebrow">Notre méthode</p><h2 id="method-title">Un suivi de terrain, chaque jour.</h2></div><p class="lead">De la préparation des équipes à l’analyse des opérations, chaque étape contribue à la continuité du service.</p></div>
-    <ol class="method-steps" data-reveal><li><span>01</span><strong>Planifier</strong><p>Besoins, volumes et horaires.</p></li><li><span>02</span><strong>Affecter</strong><p>Agents et équipements adaptés.</p></li><li><span>03</span><strong>Superviser</strong><p>Présence et coordination sur site.</p></li><li><span>04</span><strong>Mesurer</strong><p>Cadence, incidents et casse.</p></li><li><span>05</span><strong>Corriger</strong><p>Analyse et actions de progrès.</p></li></ol>
-  </div>
-</section>
 
 <section class="section commercial-proof" aria-labelledby="proof-title">
   <div class="shell commercial-proof-grid">
@@ -151,8 +128,8 @@
   <div class="shell">
     <div class="section-head" data-reveal>
       <div>
-        <p class="eyebrow">Nos partenaires</p>
-        <h2 id="partners-title">La confiance se construit sur le terrain.</h2>
+        <p class="eyebrow">Ils nous font confiance</p>
+        <h2 id="partners-title">Des collaborations ancrées sur le terrain.</h2>
         <p class="partner-section-intro">Avec nos partenaires, nous adaptons l’encadrement aux besoins de chaque site et suivons les opérations au quotidien.</p>
       </div>
       {% if site.page_partners_visible %}<a class="text-link" href="{% url 'partenaires' %}">Voir nos partenaires <span aria-hidden="true">↗</span></a>{% endif %}

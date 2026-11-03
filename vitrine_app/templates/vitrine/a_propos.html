@@ -1,7 +1,7 @@
 {% extends 'vitrine/base.html' %}
 {% load static %}
 {% block title %}Qui sommes-nous · MATRANS{% endblock %}
-{% block extra_css %}<link rel="stylesheet" href="{% static 'vitrine/identity.css' %}?v=20261031-2">{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'vitrine/identity.css' %}?v=20261103-1">{% endblock %}
 {% block content %}
 <section class="about-hero">
   <div class="shell about-hero-grid">
@@ -22,18 +22,18 @@
   </div>
 </section>
 
-<section class="section identity-detail" aria-labelledby="identity-detail-title">
-  <div class="shell identity-detail-layout">
-    <div class="identity-detail-copy" data-reveal>
-      <p class="eyebrow">L’esprit MATRANS</p>
-      <h2 id="identity-detail-title">Faire avancer les opérations, <em>avec ceux qui les rendent possibles.</em></h2>
-      <p class="identity-opening">{{ site.raison_etre }}</p>
-      {% if site.mission %}<p>{{ site.mission }}</p>{% endif %}
+<section class="about-values" aria-labelledby="about-values-title">
+  <div class="shell about-values-layout" data-reveal>
+    <div class="about-values-heading">
+      <p class="eyebrow light">Nos valeurs</p>
+      <h2 id="about-values-title">Trois repères pour agir.</h2>
     </div>
-    <figure class="identity-detail-visual" data-reveal>
-      <img src="{% static 'vitrine/images/distribution-livraison.png' %}" alt="Illustration de la préparation et du chargement des marchandises" loading="lazy">
-      <figcaption>Des équipes présentes là où les flux prennent vie. <span>Illustration</span></figcaption>
-    </figure>
+    <div class="about-values-grid">
+      <div><span>01</span><h3>Rigueur</h3><p>Préparer et suivre chaque opération.</p></div>
+      <div><span>02</span><h3>Discipline</h3><p>Respecter les consignes et les engagements.</p></div>
+      <div><span>03</span><h3>Sécurité</h3><p>Veiller sur les personnes et les marchandises.</p></div>
+    </div>
+    {% if site.valeurs %}<p class="about-values-note">{{ site.valeurs }}</p>{% endif %}
   </div>
 </section>
 
@@ -43,35 +43,30 @@
       {% if site.about_handling_image %}
         <img src="{{ site.about_handling_image.url }}" alt="Équipe en activité de manutention" loading="lazy">
       {% else %}
-        <img src="{% static 'vitrine/images/manutention-equipe.png' %}" alt="Illustration d’une équipe organisée en entrepôt" loading="lazy">
+        <img src="{% static 'vitrine/images/manutention-equipe-v2.png' %}" alt="Illustration d’une équipe organisée en entrepôt" loading="lazy">
       {% endif %}
       <figcaption>Manutention <span>Illustration</span></figcaption>
     </figure>
     <div data-reveal>
-      <p class="eyebrow">Sur le terrain</p>
-      <h2>La qualité d’un service se construit dans les détails.</h2>
+      <p class="eyebrow">Notre approche</p>
+      <h2>Une organisation adaptée à chaque site.</h2>
       <div class="article-body">
-        <p>{{ site.plus_value }}</p>
         {% if site.about_body %}
           {{ site.about_body|linebreaks }}
+        {% else %}
+          <p>{{ site.plus_value }}</p>
         {% endif %}
       </div>
-      <p class="identity-story-emphasis">{{ site.objectifs }}</p>
     </div>
   </div>
 </section>
 
 <section class="section identity-journey" aria-labelledby="journey-title">
-  <div class="shell identity-journey-grid">
+  <div class="shell identity-journey-compact">
     <div class="identity-journey-main" data-reveal>
-      <p class="eyebrow light">Une histoire de terrain</p>
-      <h2 id="journey-title">Grandir sans perdre ce qui compte.</h2>
+      <p class="eyebrow light">Notre parcours</p>
+      <h2 id="journey-title">Une expérience construite sur le terrain.</h2>
       <p>{{ site.historique }}</p>
-    </div>
-    <div class="identity-journey-aside" data-reveal>
-      <span class="identity-journey-symbol" aria-hidden="true">“</span>
-      <p class="identity-values-text">{{ site.valeurs }}</p>
-      {% if site.vision %}<p class="identity-vision-text">{{ site.vision }}</p>{% endif %}
     </div>
   </div>
 </section>
