@@ -36,3 +36,7 @@
 
 @media(max-width:750px){.partners-hero:after{background:linear-gradient(90deg,rgba(7,37,28,.9),rgba(8,43,32,.62))}.partners-directory-head{display:block}.partners-contact-inner{display:block}.partners-contact .button{margin-top:30px}}
 @media(max-width:560px){.partners-hero{min-height:420px}.partners-hero-inner{padding:76px 0}.partners-hero h1{font-size:clamp(47px,11vw,65px)}.partner-showcase{grid-template-columns:1fr}.partner-showcase-mark{min-height:220px;border-right:0;border-bottom:1px solid #e4ebe4}.partner-showcase-mark img{max-height:150px}.partner-showcase-copy{padding:28px}.partner-showcase-index{margin-bottom:18px}}
+
+.home-client-tile{min-height:185px;flex-direction:column;gap:12px}
+.home-client-tile .partner-logo{height:105px;margin:0}
+.home-client-tile strong{font-size:16px;letter-spacing:.04em}

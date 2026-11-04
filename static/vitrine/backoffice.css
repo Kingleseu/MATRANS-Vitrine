@@ -35,3 +35,21 @@
 .account-row small{color:var(--muted);margin-top:3px}
 .account-form-panel{max-width:680px}
 @media(max-width:590px){.account-row{align-items:flex-start;flex-direction:column}}
+
+.home-order-panel{max-width:880px}
+.home-order-fixed,.home-order-row{display:flex;align-items:center;gap:18px;padding:16px 18px;border:1px solid var(--line);border-radius:8px;background:#f8faf7}
+.home-order-fixed{margin-bottom:16px;background:#edf4ed}
+.home-order-fixed>div{flex:1}
+.home-order-fixed strong,.home-order-fixed small{display:block}
+.home-order-fixed small{font-size:12px;color:var(--muted)}
+.home-order-number{flex:none;width:37px;color:var(--green);font-weight:900;font-variant-numeric:tabular-nums}
+.home-order-lock{font-size:12px;font-weight:800;color:var(--muted)}
+.home-order-list{display:grid;gap:9px;list-style:none;margin:0;padding:0}
+.home-order-row{background:#fff}
+.home-order-row>strong{flex:1;font-size:16px}
+.home-order-controls{display:flex;gap:7px;margin:0}
+.home-order-controls button{display:inline-flex;align-items:center;gap:5px;min-height:37px;padding:7px 10px;border:1px solid #b9cebd;border-radius:5px;background:#fff;color:var(--pine);font-size:13px;font-weight:750;cursor:pointer}
+.home-order-controls button:hover:not(:disabled){background:#eaf3eb;border-color:var(--green)}
+.home-order-controls button:disabled{opacity:.38;cursor:not-allowed}
+.home-order-help{margin:19px 0 0;color:var(--muted);font-size:13px;line-height:1.5}
+@media(max-width:590px){.home-order-row{gap:10px;padding:14px}.home-order-row>strong{font-size:14px}.home-order-controls button{padding:7px 9px}.home-order-controls button span{display:none}}

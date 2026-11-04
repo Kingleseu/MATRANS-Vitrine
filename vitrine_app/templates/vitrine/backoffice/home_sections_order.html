@@ -1,0 +1,30 @@
+{% extends 'vitrine/backoffice/base.html' %}
+{% block title %}Ordre de l’accueil · MATRANS Studio{% endblock %}
+{% block content %}
+<div class="content-head">
+  <div>
+    <p class="eyebrow">Mise en page</p>
+    <h1>Ordre de l’accueil</h1>
+    <p class="muted">Placez les sections dans l’ordre souhaité. Chaque déplacement est enregistré immédiatement.</p>
+  </div>
+  <a class="button secondary" href="{% url 'home' %}" target="_blank" rel="noopener noreferrer">Voir l’accueil ↗</a>
+</div>
+<div class="panel home-order-panel">
+  <div class="home-order-fixed"><span class="home-order-number">—</span><div><strong>Bannière d’accueil</strong><small>Toujours en première position.</small></div><span class="home-order-lock">Fixe</span></div>
+  <ol class="home-order-list">
+    {% for row in rows %}
+    <li class="home-order-row">
+      <span class="home-order-number">{{ row.position|stringformat:'02d' }}</span>
+      <strong>{{ row.label }}</strong>
+      <form method="post" class="home-order-controls">
+        {% csrf_token %}
+        <input type="hidden" name="section" value="{{ row.key }}">
+        <button type="submit" name="direction" value="up" aria-label="Monter {{ row.label }}" title="Monter {{ row.label }}" {% if not row.can_move_up %}disabled{% endif %}>↑ <span>Monter</span></button>
+        <button type="submit" name="direction" value="down" aria-label="Descendre {{ row.label }}" title="Descendre {{ row.label }}" {% if not row.can_move_down %}disabled{% endif %}>↓ <span>Descendre</span></button>
+      </form>
+    </li>
+    {% endfor %}
+  </ol>
+  <p class="home-order-help">L’accueil conserve cet ordre. « Nos clients » apparaît dès qu’un client est publié. « Événements » et « Offres d’emploi » apparaissent quand leur page est activée ; les événements nécessitent aussi du contenu publié.</p>
+</div>
+{% endblock %}

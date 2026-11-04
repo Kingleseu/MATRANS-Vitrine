@@ -44,11 +44,11 @@
     <div class="shell footer-top">
       <div class="footer-intro"><p class="eyebrow">MATRANS S.A.R.L.</p><h2>Construisons la suite<br>ensemble.</h2>{% if site.page_contact_visible %}<a class="text-link light" href="{% url 'contact' %}">Parlons de votre projet <span aria-hidden="true">↗</span></a>{% endif %}</div>
       <div><h3>Explorer</h3>{% if site.page_about_visible %}<a href="{% url 'a_propos' %}">L'entreprise</a>{% endif %}{% if site.page_activities_visible %}<a href="{% url 'activites' %}">Nos activités</a>{% endif %}{% if site.page_partners_visible %}<a href="{% url 'partenaires' %}">Partenaires</a>{% endif %}{% if site.page_events_visible %}<a href="{% url 'evenements' %}">Événements</a>{% endif %}{% if site.page_careers_visible %}<a href="{% url 'carrieres' %}">Offres d'emploi</a>{% endif %}</div>
-      <div><h3>Contact</h3>{% if site.contact_address %}<p>{{ site.contact_address }}</p>{% endif %}{% if site.contact_email %}<a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a>{% endif %}{% if site.contact_phone %}<a href="tel:{{ site.contact_phone|cut:' ' }}">{{ site.contact_phone }}</a>{% endif %}{% if site.page_contact_visible %}<a href="{% url 'contact' %}">Formulaire de contact</a>{% endif %}</div>
+      <div><h3>Contact</h3>{% if site.contact_address %}<p>{{ site.contact_address }}</p>{% endif %}{% if site.contact_email %}<a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a>{% endif %}{% if site.contact_phone %}<a href="tel:{{ site.contact_phone|cut:' ' }}">{{ site.contact_phone }}</a>{% endif %}{% if site.page_contact_visible %}<a href="{% url 'contact' %}">Formulaire de contact</a>{% endif %}{% block footer_note %}{% endblock %}</div>
     </div>
     <div class="shell footer-bottom"><span>© {% now "Y" %} MATRANS S.A.R.L.</span><span>Distribution & manutention · RDC</span><div class="social-links" aria-label="Réseaux sociaux">{% if site.facebook_url %}<a href="{{ site.facebook_url }}" target="_blank" rel="noopener noreferrer">Facebook ↗</a>{% endif %}{% if site.instagram_url %}<a href="{{ site.instagram_url }}" target="_blank" rel="noopener noreferrer">Instagram ↗</a>{% endif %}{% if site.linkedin_url %}<a href="{{ site.linkedin_url }}" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>{% endif %}{% if site.youtube_url %}<a href="{{ site.youtube_url }}" target="_blank" rel="noopener noreferrer">YouTube ↗</a>{% endif %}</div></div>
   </footer>
-  <script src="{% static 'vitrine/site.js' %}?v=20261031-1" defer></script>
+  <script src="{% static 'vitrine/site.js' %}?v=20261104-3" defer></script>
   {% block extra_scripts %}{% endblock %}
 </body>
 </html>

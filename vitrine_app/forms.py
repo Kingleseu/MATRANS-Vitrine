@@ -40,7 +40,7 @@ class SiteContentForm(StyledModelForm):
         exclude = [
             'updated_at', 'page_about_visible', 'page_activities_visible',
             'page_partners_visible', 'page_events_visible', 'page_careers_visible',
-            'page_contact_visible',
+            'page_contact_visible', 'home_section_order',
         ]
         widgets = {
             'hero_text': forms.Textarea(attrs={'rows': 3}),

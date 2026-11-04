@@ -11,6 +11,7 @@ urlpatterns = [
     path('deconnexion/', LogoutView.as_view(next_page='vitrine_admin:connexion'), name='deconnexion'),
     path('', views.dashboard, name='dashboard'),
     path('contenu/', views.site_content, name='site_content'),
+    path('accueil/ordre/', views.home_sections_order, name='home_sections_order'),
     path('pages/', views.page_visibility, name='page_visibility'),
     path('mot-de-passe/', views.change_password, name='change_password'),
     path('comptes/', views.accounts_list, name='accounts'),

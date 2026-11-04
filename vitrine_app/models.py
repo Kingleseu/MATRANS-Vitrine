@@ -3,6 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
 
 from .storage import PrivateApplicationStorage
+from .home_sections import default_home_sections
 
 
 class SiteContent(models.Model):
@@ -11,14 +12,14 @@ class SiteContent(models.Model):
     hero_kicker = models.CharField(max_length=100, default='MATRANS S.A.R.L. · République démocratique du Congo')
     hero_title = models.CharField(max_length=180, default='Vous gérez votre métier.')
     hero_title_accent = models.CharField('Suite du titre en orange', max_length=180, blank=True, default='')
-    hero_text = models.TextField(default='Matrans SARL est spécialisée dans la manutention et étend ses activités au transport. Nous encadrons et suivons vos opérations pour renforcer la sécurité, réduire les incidents et assurer la régularité des équipes de caristes et de manutentionnaires.')
+    hero_text = models.TextField(default='Matrans SARL est une entreprise spécialisée dans les opérations de manutention, avec une extension naturelle vers le transport.')
     hero_image = models.ImageField("Image d'accueil", upload_to='vitrine/accueil/', blank=True, help_text="Remplace l'illustration provisoire de l'accueil.")
     about_title = models.CharField(max_length=160, default='Des équipes engagées au cœur de vos flux.')
     about_intro = models.TextField(default='MATRANS S.A.R.L. organise le chargement et le déchargement par chariots élévateurs, encadre les équipes sur site et accompagne les opérations de distribution en RDC.')
     about_body = models.TextField(blank=True)
     about_distribution_image = models.ImageField('Image de distribution', upload_to='vitrine/presentation/', blank=True, help_text="Remplace l'illustration de distribution sur l'accueil et la présentation.")
     about_handling_image = models.ImageField('Image de manutention', upload_to='vitrine/presentation/', blank=True, help_text="Remplace l'illustration de manutention sur l'accueil et la présentation.")
-    mission = models.TextField(blank=True)
+    mission = models.TextField(blank=True, default='Nous mettons à votre disposition un encadrement et un suivi opérationnel rigoureux pour répondre aux défis majeurs de votre Supply Chain : sécurité, réduction des incidents et régularité des effectifs (caristes ou manutentionnaires).')
     vision = models.TextField(blank=True)
     raison_etre = models.TextField('Raison d’être', default="Notre modèle d'externalisation sur mesure vous libère des contraintes RH liées à cette catégorie tout en veillant à la performance opérationnelle, vous permettant ainsi de sécuriser vos flux et de vous concentrer sur vos priorités stratégiques dans un esprit de partenariat durable.")
     objectifs = models.TextField('Nos objectifs', default='Assurer la continuité des opérations, adapter les équipes aux volumes de chaque site et améliorer la sécurité, la qualité et la cadence grâce au suivi de terrain.')
@@ -33,15 +34,16 @@ class SiteContent(models.Model):
     linkedin_url = models.URLField(blank=True)
     youtube_url = models.URLField(blank=True)
     show_team = models.BooleanField(default=False, verbose_name="Afficher l'équipe")
-    page_about_visible = models.BooleanField('Qui sommes-nous', default=True)
-    page_activities_visible = models.BooleanField('Activités', default=True)
-    page_partners_visible = models.BooleanField('Partenaires', default=True)
+    page_about_visible = models.BooleanField('Qui sommes-nous', default=False)
+    page_activities_visible = models.BooleanField('Activités', default=False)
+    page_partners_visible = models.BooleanField('Partenaires', default=False)
     page_events_visible = models.BooleanField('Événements', default=True)
-    page_careers_visible = models.BooleanField('Carrières et offres d’emploi', default=True)
+    page_careers_visible = models.BooleanField('Carrières et offres d’emploi', default=False)
     page_contact_visible = models.BooleanField('Contact', default=True)
-    metric_caristes = models.CharField('Caristes formés · chiffre', max_length=30, default='200+')
+    home_section_order = models.JSONField('Ordre des sections de l’accueil', default=default_home_sections)
+    metric_caristes = models.CharField('Caristes formés · chiffre', max_length=30, default='+200')
     metric_manutentionnaires = models.CharField('Manutentionnaires gérés · chiffre', max_length=30, default='100+')
-    metric_casiers = models.CharField('Manipulations par jour · chiffre', max_length=30, default='300 000')
+    metric_casiers = models.CharField('Manipulations par jour · chiffre', max_length=30, default='≈ 300 000')
     metric_incidents = models.CharField('Évolution des incidents chez BRACONGO · chiffre', max_length=30, default='-30 %')
     metric_source = models.CharField('Source et période des chiffres', max_length=220, default='Présentation commerciale MATRANS 2026 ; volume quotidien confirmé par MATRANS le 30 octobre 2026')
     updated_at = models.DateTimeField(auto_now=True)

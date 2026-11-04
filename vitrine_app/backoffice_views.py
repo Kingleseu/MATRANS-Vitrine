@@ -10,7 +10,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.views import LoginView
 from django.db import connections, router, transaction
 from django.db.models import Q
-from django.http import FileResponse, Http404, HttpResponseForbidden
+from django.http import FileResponse, Http404, HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_POST
@@ -18,6 +18,7 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.debug import sensitive_post_parameters
 
 from .email_delivery import MailDeliveryError, MailNotConfigured, mail_ready, send_contact_reply
+from .home_sections import HOME_SECTION_LABELS, normalize_home_sections
 from .forms import (
     ActiviteForm, CentreVitrineForm, EvenementForm, MembreEquipeForm, OffreEmploiForm,
     OffreQuestionForm, PageVisibilityForm, PartenaireForm, SiteContentForm, ContactReplyForm,
@@ -149,6 +150,36 @@ def site_content(request):
         form=form, title='Présentation & coordonnées', intro='Modifiez les textes, les photos, les chiffres clés et leur source avant publication.',
         return_url=reverse('vitrine_admin:dashboard'),
     ))
+
+
+@editor_required
+def home_sections_order(request):
+    site = SiteContent.objects.first() or SiteContent()
+    order = normalize_home_sections(site.home_section_order)
+    if request.method == 'POST':
+        section = request.POST.get('section')
+        direction = request.POST.get('direction')
+        if section not in HOME_SECTION_LABELS or direction not in {'up', 'down'}:
+            return HttpResponseBadRequest('Déplacement invalide.')
+        position = order.index(section)
+        target = position + (-1 if direction == 'up' else 1)
+        if 0 <= target < len(order):
+            order[position], order[target] = order[target], order[position]
+            site.home_section_order = order
+            site.save(update_fields=['home_section_order'] if site.pk else None)
+            messages.success(request, 'L’ordre de l’accueil a été enregistré.')
+        return redirect('vitrine_admin:home_sections_order')
+    rows = [
+        {
+            'key': key,
+            'label': HOME_SECTION_LABELS[key],
+            'position': index + 1,
+            'can_move_up': index > 0,
+            'can_move_down': index < len(order) - 1,
+        }
+        for index, key in enumerate(order)
+    ]
+    return render(request, 'vitrine/backoffice/home_sections_order.html', _layout(rows=rows))
 
 
 @editor_required

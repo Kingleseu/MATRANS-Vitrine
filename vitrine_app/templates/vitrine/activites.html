@@ -1,7 +1,7 @@
 {% extends 'vitrine/base.html' %}
 {% load static l10n %}
 {% block title %}Nos activités et sites · MATRANS{% endblock %}
-{% block extra_css %}<link rel="stylesheet" href="{% static 'vitrine/map.css' %}?v=20261102-3"><link rel="stylesheet" href="{% static 'vitrine/commercial.css' %}"><link rel="stylesheet" href="{% static 'vitrine/activities.css' %}?v=20261103-1">{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'vitrine/map.css' %}?v=20261102-3"><link rel="stylesheet" href="{% static 'vitrine/commercial.css' %}"><link rel="stylesheet" href="{% static 'vitrine/activities.css' %}?v=20261104-1">{% endblock %}
 {% block content %}
 <section class="activities-hero" aria-labelledby="activities-title">
   <img class="activities-hero-photo" src="{% static 'vitrine/images/terrain-cariste-distance-matrans.jpg' %}" alt="" fetchpriority="high">
@@ -15,7 +15,6 @@
         {% if site.page_contact_visible %}<a class="button ghost" href="{% url 'contact' %}">Parlons de votre site <span aria-hidden="true">↗</span></a>{% endif %}
       </div>
     </div>
-    <div class="activities-hero-note"><span>Des interventions selon vos besoins</span><strong>Manutention manuelle, mécanisée et mixte</strong><a href="#carte-centres">Explorer nos sites <span aria-hidden="true">↘</span></a></div>
   </div>
 </section>
 

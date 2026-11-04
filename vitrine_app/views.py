@@ -7,6 +7,7 @@ from django.utils import timezone
 from .forms import CandidatureForm, ContactForm
 from .email_delivery import MailDeliveryError, MailNotConfigured, notify_contact
 from .map_geometry import MAP_HEIGHT, MAP_WIDTH, project
+from .home_sections import normalize_home_sections
 from .models import Activite, CentreVitrine, Evenement, MembreEquipe, OffreEmploi, Partenaire, SiteContent
 
 
@@ -62,7 +63,9 @@ def _map_data():
 
 
 def home(request):
-    return render(request, 'vitrine/home.html', _context(
+    site = _site()
+    return render(request, 'vitrine/home.html', _context(site=site,
+        home_sections=normalize_home_sections(site.home_section_order),
         activites=Activite.objects.filter(publiee=True)[:4],
         partenaires=Partenaire.objects.filter(publie=True),
         offres=_open_offers()[:3],
